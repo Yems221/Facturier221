@@ -1126,6 +1126,74 @@
         .online-status.offline {
             background: var(--warning);
         }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--surface);
+            border-radius: 8px;
+            box-shadow: var(--shadow-1);
+            padding: 16px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 100%;
+            height: 260px;
+            border-radius: 8px;
+            background: var(--surface);
+            box-shadow: var(--shadow-1);
+            margin-bottom: 16px;
+        }
+
+        @media print {
+            @page {
+                size: 80mm auto;
+                margin: 5mm;
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            #receiptPreview,
+            #receiptPreview * {
+                visibility: visible;
+            }
+
+            #receiptPreview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 80mm;
+                font-size: 12px;
+            }
+
+            .app-bar,
+            .btn,
+            .tabs,
+            .filter-chips,
+            #settingsPage,
+            #historyPage {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1379,6 +1447,10 @@
                 <span class="material-icons">picture_as_pdf</span>
                 PDF A4
             </button>
+            <button class="btn btn-outline" id="printTicket">
+                <span class="material-icons">print</span>
+                Ticket
+            </button>
             <button class="btn btn-primary" id="shareWhatsApp">
                 <span class="material-icons">share</span>
                 Partager WhatsApp
@@ -1405,6 +1477,9 @@
         <div class="tabs">
             <button class="tab active" data-tab="receipts">Reçus</button>
             <button class="tab" data-tab="contacts">Contacts</button>
+            <button class="tab" data-tab="dashboard">Dashboard</button>
+            <button class="tab" data-tab="products">Produits</button>
+            <button class="tab" data-tab="reports">Rapports</button>
         </div>
 
         <div id="receiptsTab">
@@ -1474,6 +1549,66 @@
                         </thead>
                         <tbody id="contactsTableBody"></tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div id="dashboardTab" class="hidden">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total Ventes</div>
+                    <div class="kpi-value" id="kpiTotalSales">0 FCFA</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Nombre Reçus</div>
+                    <div class="kpi-value" id="kpiReceiptCount">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Panier Moyen</div>
+                    <div class="kpi-value" id="kpiAverageBasket">0 FCFA</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Taux Paiement</div>
+                    <div class="kpi-value" id="kpiPaymentRate">0%</div>
+                </div>
+            </div>
+            <canvas id="chartSalesByDay" class="chart-canvas"></canvas>
+            <canvas id="chartTopProducts" class="chart-canvas"></canvas>
+        </div>
+
+        <div id="productsTab" class="hidden">
+            <div class="card">
+                <div class="card-content" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 18px; font-weight: 500;">Gestion des Produits</div>
+                        <div class="text-secondary" style="font-size: 13px;" id="productsCount">0 produits</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="showAddProductModal()">
+                        <span class="material-icons">add</span>
+                        Nouveau Produit
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prix</th>
+                                <th>Code-barres</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="reportsTab" class="hidden">
+            <div class="card">
+                <div class="card-content" style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                    <button class="btn btn-secondary" onclick="generateReport('daily')">📊 Rapport Journalier</button>
+                    <button class="btn btn-secondary" onclick="generateReport('weekly')">📊 Rapport Hebdomadaire</button>
+                    <button class="btn btn-secondary" onclick="generateReport('monthly')">📊 Rapport Mensuel</button>
                 </div>
             </div>
         </div>
@@ -2073,6 +2208,7 @@
             document.getElementById('addProduct').addEventListener('click', addProduct);
             document.getElementById('saveImage').addEventListener('click', saveAsImage);
             document.getElementById('savePDF').addEventListener('click', saveAsPDF);
+            document.getElementById('printTicket').addEventListener('click', printTicket);
             document.getElementById('shareWhatsApp').addEventListener('click', shareWhatsApp);
             document.getElementById('newReceipt').addEventListener('click', newReceipt);
 
@@ -2528,6 +2664,11 @@
             } finally {
                 receiptEl.classList.remove('pdf-mode');
             }
+        }
+
+        function printTicket() {
+            showSnackbar('Ouverture impression...');
+            setTimeout(() => window.print(), 500);
         }
 
         function shareWhatsApp() {
@@ -3019,6 +3160,36 @@
             
             showSnackbar('Export CSV généré');
         }
+        // ============================
+        // DASHBOARD & PRODUCTS
+        // ============================
+
+        function loadDashboard() {
+            const totalSales = receipts.reduce((sum, r) => sum + r.total, 0);
+            const receiptCount = receipts.length;
+            const averageBasket = receiptCount ? Math.round(totalSales / receiptCount) : 0;
+            const paidCount = receipts.filter(r => r.paid && !r.partialPayment).length;
+            const paymentRate = receiptCount ? Math.round((paidCount / receiptCount) * 100) : 0;
+
+            document.getElementById('kpiTotalSales').textContent = `${totalSales.toLocaleString()} FCFA`;
+            document.getElementById('kpiReceiptCount').textContent = receiptCount.toLocaleString();
+            document.getElementById('kpiAverageBasket').textContent = `${averageBasket.toLocaleString()} FCFA`;
+            document.getElementById('kpiPaymentRate').textContent = `${paymentRate}%`;
+        }
+
+        function loadProducts() {
+            const tbody = document.getElementById('productsTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 24px;">Aucun produit pour le moment</td></tr>';
+        }
+
+        function showAddProductModal() {
+            showSnackbar('Fonction d’ajout produit à implémenter');
+        }
+
+        function generateReport(type) {
+            showSnackbar(`Génération rapport ${type}...`);
+        }
 
         // ============================
         // TAB MANAGEMENT
@@ -3035,11 +3206,37 @@
             if (tabName === 'receipts') {
                 document.getElementById('receiptsTab').classList.remove('hidden');
                 document.getElementById('contactsTab').classList.add('hidden');
+                document.getElementById('dashboardTab').classList.add('hidden');
+                document.getElementById('productsTab').classList.add('hidden');
+                document.getElementById('reportsTab').classList.add('hidden');
                 loadHistory();
             } else if (tabName === 'contacts') {
                 document.getElementById('receiptsTab').classList.add('hidden');
                 document.getElementById('contactsTab').classList.remove('hidden');
+                document.getElementById('dashboardTab').classList.add('hidden');
+                document.getElementById('productsTab').classList.add('hidden');
+                document.getElementById('reportsTab').classList.add('hidden');
                 loadContacts();
+                } else if (tabName === 'dashboard') {
+                document.getElementById('receiptsTab').classList.add('hidden');
+                document.getElementById('contactsTab').classList.add('hidden');
+                document.getElementById('dashboardTab').classList.remove('hidden');
+                document.getElementById('productsTab').classList.add('hidden');
+                document.getElementById('reportsTab').classList.add('hidden');
+                loadDashboard();
+            } else if (tabName === 'products') {
+                document.getElementById('receiptsTab').classList.add('hidden');
+                document.getElementById('contactsTab').classList.add('hidden');
+                document.getElementById('dashboardTab').classList.add('hidden');
+                document.getElementById('productsTab').classList.remove('hidden');
+                document.getElementById('reportsTab').classList.add('hidden');
+                loadProducts();
+            } else if (tabName === 'reports') {
+                document.getElementById('receiptsTab').classList.add('hidden');
+                document.getElementById('contactsTab').classList.add('hidden');
+                document.getElementById('dashboardTab').classList.add('hidden');
+                document.getElementById('productsTab').classList.add('hidden');
+                document.getElementById('reportsTab').classList.remove('hidden');
             }
         }
 
