@@ -44,11 +44,28 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background: var(--background);
             color: var(--text-primary);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+        }
+         .icon-text {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .icon-text[data-icon] {
+            font-size: 0;
+        }
+
+        .icon-text img {
+            width: 18px;
+            height: 18px;
+            display: block;
         }
 
         .app-bar {
@@ -1211,10 +1228,10 @@
             </div>
             <div style="display: flex; gap: 8px;">
                 <button class="icon-button" id="historyBtn" title="Historique">
-                    <span class="material-icons">history</span>
+                    <span class="icon-text" data-icon="receipt" aria-hidden="true"></span>
                 </button>
                 <button class="icon-button" id="settingsBtn" title="Paramètres">
-                    <span class="material-icons">settings</span>
+                    <span class="icon-text" data-icon="settings" aria-hidden="true"></span>
                 </button>
             </div>
         </div>
@@ -1275,13 +1292,13 @@
                         </thead>
                         <tbody id="productsContainer">
                             <tr class="product-row">
-                                <td><input type="text" class="product-name" required></td>
+                                <td><input type="text" class="product-name" list="productNameList" required></td>
                                 <td><input type="number" class="product-quantity" min="1" value="1" required></td>
                                 <td><input type="number" class="product-price" min="0" required></td>
                                 <td><input type="number" class="product-total" readonly></td>
                                 <td>
                                     <button class="btn btn-text btn-icon remove-product" title="Supprimer">
-                                        <span class="material-icons">delete</span>
+                                        <span class="icon-text" data-icon="delete" aria-hidden="true"></span>
                                     </button>
                                 </td>
                             </tr>
@@ -1289,7 +1306,7 @@
                     </table>
                 </div>
                 <button class="btn btn-text mt-16" id="addProduct">
-                    <span class="material-icons">add</span>
+                    <span class="icon-text" data-icon="add" aria-hidden="true"></span>
                     Ajouter un Produit
                 </button>
             </div>
@@ -1331,7 +1348,7 @@
 
         <div class="btn-group">
             <button class="btn btn-primary" id="generateReceipt">
-                <span class="material-icons">receipt</span>
+                <span class="icon-text" data-icon="receipt" aria-hidden="true"></span>
                 Générer le Reçu
             </button>
         </div>
@@ -1417,7 +1434,7 @@
                 <div class="receipt-payment">
                     <div class="receipt-payment-title">Méthode de Paiement</div>
                     <a href="#" target="_blank" class="btn btn-blue btn-sm" id="wavePaymentLink">
-                        <span class="material-icons" style="font-size: 16px;">payment</span>
+                        <span class="icon-text" aria-hidden="true">💳</span>
                         Payer avec Wave
                     </a>
                     <div class="wave-qr-container" id="waveQrContainer"></div>
@@ -1440,23 +1457,27 @@
 
         <div class="btn-group hidden" id="receiptActions">
             <button class="btn btn-secondary" id="saveImage">
-                <span class="material-icons">image</span>
+                <span class="icon-text" data-icon="export" aria-hidden="true"></span>
                 Image Story
             </button>
             <button class="btn btn-secondary" id="savePDF">
-                <span class="material-icons">picture_as_pdf</span>
+                <span class="icon-text" data-icon="reports" aria-hidden="true"></span>
                 PDF A4
+            </button>
+            <button class="btn btn-outline" id="printTicket">
+                <span class="icon-text" data-icon="print" aria-hidden="true"></span>
+                Ticket
             </button>
             <button class="btn btn-outline" id="printTicket">
                 <span class="material-icons">print</span>
                 Ticket
             </button>
             <button class="btn btn-primary" id="shareWhatsApp">
-                <span class="material-icons">share</span>
+                <span class="icon-text" data-icon="share" aria-hidden="true"></span>
                 Partager WhatsApp
             </button>
             <button class="btn btn-text" id="newReceipt">
-                <span class="material-icons">refresh</span>
+                <span class="icon-text" aria-hidden="true">🔄</span>
                 Nouveau Reçu
             </button>
         </div>
@@ -1469,7 +1490,7 @@
                 <p class="text-secondary">Gérer les reçus et contacts</p>
             </div>
             <button class="btn btn-text" id="backToMain">
-                <span class="material-icons">arrow_back</span>
+                <span class="icon-text" aria-hidden="true">←</span>
                 Retour
             </button>
         </div>
@@ -1526,9 +1547,9 @@
                             <div class="text-secondary" style="font-size: 13px;" id="contactsCount">0 contacts</div>
                         </div>
                         <button class="btn btn-primary" id="exportContactsCSV">
-                            <span class="material-icons">download</span>
-                            Export CSV
-                        </button>
+                            <span class="icon-text" data-icon="export" aria-hidden="true"></span>
+                        Export CSV
+                    </button>
                     </div>
                     <div class="input-field">
                         <input type="text" id="searchContacts" placeholder="Rechercher un contact...">
@@ -1621,7 +1642,7 @@
                 <p class="text-secondary">Configurer votre application</p>
             </div>
             <button class="btn btn-text" id="backFromSettings">
-                <span class="material-icons">arrow_back</span>
+                <span class="icon-text" aria-hidden="true">←</span>
                 Retour
             </button>
         </div>
@@ -1751,6 +1772,29 @@
             </div>
         </div>
 
+        <div class="card">
+            <div class="card-title">Sauvegarde & Import</div>
+            <div class="card-content">
+                <p class="text-secondary" style="margin-bottom: 16px;">
+                    Exportez vos données ou importez une sauvegarde JSON.
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                    <button class="btn btn-secondary" id="exportDataJson">
+                        <span class="icon-text" data-icon="export" aria-hidden="true"></span>
+                        Export JSON
+                    </button>
+                    <label class="btn btn-secondary" for="importDataJson">
+                        <span class="icon-text" data-icon="import" aria-hidden="true"></span>
+                        Import JSON
+                    </label>
+                    <input type="file" id="importDataJson" accept="application/json" style="display: none;">
+                </div>
+                <div class="text-secondary" style="margin-top: 12px; font-size: 12px;">
+                    L'import fusionne les reçus et produits par identifiant.
+                </div>
+            </div>
+        </div>
+
         <div class="btn-group">
             <button class="btn btn-primary" id="saveSettings">
                 <span class="material-icons">save</span>
@@ -1764,6 +1808,63 @@
     </div>
 
     <!-- Modals -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="productModalTitle">Nouveau Produit</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-field">
+                    <label>Nom du Produit *</label>
+                    <input type="text" id="productNameInput" placeholder="Nom du produit">
+                </div>
+                <div class="form-row">
+                    <div class="input-field">
+                        <label>Prix (FCFA) *</label>
+                        <input type="number" id="productPriceInput" min="0" placeholder="Prix">
+                    </div>
+                    <div class="input-field">
+                        <label>Code-barres</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="productBarcodeInput" placeholder="Scanner ou saisir">
+                            <button class="btn btn-secondary btn-sm" id="scanProductBarcode">
+                                <span class="icon-text" data-icon="scan" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <label>Description</label>
+                    <input type="text" id="productDescriptionInput" placeholder="Optionnel">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-text" id="cancelProductModal">Annuler</button>
+                <button class="btn btn-primary" id="saveProductModal">
+                    <span class="icon-text" data-icon="check" aria-hidden="true"></span>
+                    Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="scannerModal" class="modal">
+        <div class="modal-content" style="max-width: 640px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Scanner un Code-barres</h3>
+            </div>
+            <div class="modal-body">
+                <div id="scannerViewport" style="width: 100%; aspect-ratio: 4 / 3; background: #000;"></div>
+                <p class="text-secondary" style="margin-top: 12px;">
+                    Alignez le code-barres au centre de l'image.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-text" id="closeScannerModal">Fermer</button>
+            </div>
+        </div>
+    </div>
+    
     <div id="registerPaymentModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1876,8 +1977,12 @@
         const STORAGE_KEYS = {
             SETTINGS: 'cafexpres_settings_v2',
             RECEIPTS: 'cafexpres_receipts_v2',
-            LOGOS: 'cafexpres_logos_v2'
+            LOGOS: 'cafexpres_logos_v2',
+            PRODUCTS: 'cafexpres_products_v2'
         };
+
+        const DB_NAME = 'cafexpres_db_v2';
+        const DB_VERSION = 1;
 
         // Default settings
         const defaultSettings = {
@@ -1897,6 +2002,13 @@
         let settings = {};
         let receipts = [];
         let logos = {};
+        let products = [];
+        let dbPromise = null;
+        let currentProductId = null;
+        let scannerTargetInput = null;
+        let scannerStream = null;
+        let scannerAnimationId = null;
+        let scannerDetector = null;
         let currentReceipt = null;
         let currentReceiptForPayment = null;
         const PASSWORD = '2411';
@@ -1907,14 +2019,20 @@
         // INITIALIZATION
         // ============================
         
-        function initializeApp() {
+        async function initializeApp() {
             console.log('Initializing Cafexpres PWA...');
             
             // Initialize storage
-            initializeStorage();
+            await initializeStorage();
+
+            // Migrate legacy storage
+            await migrateLegacyStorage();
             
             // Load data
-            loadAllData();
+            await loadAllData();
+            
+            // Apply offline icons
+            applyAssetIcons();
             
             // Setup PWA
             setupPWA();
@@ -1925,6 +2043,8 @@
             // Update UI
             updateHeaderLogo();
             loadSettingsUI();
+            refreshProductsUI();
+            loadProducts();
             
             // Setup online/offline detection
             setupOnlineDetection();
@@ -1933,54 +2053,145 @@
             showSnackbar('Application prête' + (isOnline ? '' : ' (Hors ligne)'));
         }
 
-        function initializeStorage() {
-            // Initialize settings
-            const savedSettings = localStorage.getItem(STORAGE_KEYS.SETTINGS);
-            if (!savedSettings) {
-                settings = { ...defaultSettings };
-                localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+        function openDatabase() {
+            if (!('indexedDB' in window)) {
+                return Promise.resolve(null);
             }
 
-            // Initialize receipts
-            const savedReceipts = localStorage.getItem(STORAGE_KEYS.RECEIPTS);
-            if (!savedReceipts) {
-                receipts = [];
-                localStorage.setItem(STORAGE_KEYS.RECEIPTS, JSON.stringify(receipts));
+            if (dbPromise) return dbPromise;
+
+            dbPromise = new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains('kv')) {
+                        db.createObjectStore('kv', { keyPath: 'key' });
+                    }
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+
+            return dbPromise;
+        }
+
+        async function storageGet(key) {
+            const db = await openDatabase();
+            if (!db) {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : null;
             }
 
-            // Initialize logos
-            const savedLogos = localStorage.getItem(STORAGE_KEYS.LOGOS);
-            if (!savedLogos) {
-                logos = {};
-                localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+            return new Promise((resolve) => {
+                const tx = db.transaction('kv', 'readonly');
+                const store = tx.objectStore('kv');
+                const request = store.get(key);
+                request.onsuccess = () => resolve(request.result ? request.result.value : null);
+                request.onerror = () => resolve(null);
+            });
+        }
+
+        async function storageSet(key, value) {
+            const db = await openDatabase();
+            if (!db) {
+                localStorage.setItem(key, JSON.stringify(value));
+                return;
+            }
+
+            return new Promise((resolve) => {
+                const tx = db.transaction('kv', 'readwrite');
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => resolve();
+                tx.objectStore('kv').put({ key, value });
+            });
+        }
+
+        async function initializeStorage() {
+            try {
+                await openDatabase();
+            } catch (error) {
+                console.warn('IndexedDB unavailable, fallback to localStorage', error);
+                dbPromise = null;
             }
         }
 
-        function loadAllData() {
+        async function migrateLegacyStorage() {
+            const legacyKeys = {
+                SETTINGS: 'cafexpres_settings',
+                RECEIPTS: 'cafexpres_receipts',
+                LOGOS: 'cafexpres_logos',
+                PRODUCTS: 'cafexpres_products'
+            };
+
+            const [settingsData, receiptsData, logosData, productsData] = await Promise.all([
+                storageGet(STORAGE_KEYS.SETTINGS),
+                storageGet(STORAGE_KEYS.RECEIPTS),
+                storageGet(STORAGE_KEYS.LOGOS),
+                storageGet(STORAGE_KEYS.PRODUCTS)
+            ]);
+
+            const localSettings = JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS) || 'null');
+            const localReceipts = JSON.parse(localStorage.getItem(STORAGE_KEYS.RECEIPTS) || 'null');
+            const localLogos = JSON.parse(localStorage.getItem(STORAGE_KEYS.LOGOS) || 'null');
+            const localProducts = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS) || 'null');
+
+            const legacySettings = JSON.parse(localStorage.getItem(legacyKeys.SETTINGS) || 'null');
+            const legacyReceipts = JSON.parse(localStorage.getItem(legacyKeys.RECEIPTS) || 'null');
+            const legacyLogos = JSON.parse(localStorage.getItem(legacyKeys.LOGOS) || 'null');
+            const legacyProducts = JSON.parse(localStorage.getItem(legacyKeys.PRODUCTS) || 'null');
+
+            const resolvedSettings = settingsData ?? localSettings ?? legacySettings;
+            const resolvedReceipts = receiptsData ?? localReceipts ?? legacyReceipts;
+            const resolvedLogos = logosData ?? localLogos ?? legacyLogos;
+            const resolvedProducts = productsData ?? localProducts ?? legacyProducts;
+
+            if (resolvedSettings && !settingsData) {
+                await storageSet(STORAGE_KEYS.SETTINGS, resolvedSettings);
+            }
+            if (resolvedReceipts && !receiptsData) {
+                await storageSet(STORAGE_KEYS.RECEIPTS, resolvedReceipts);
+            }
+            if (resolvedLogos && !logosData) {
+                await storageSet(STORAGE_KEYS.LOGOS, resolvedLogos);
+            }
+            if (resolvedProducts && !productsData) {
+                await storageSet(STORAGE_KEYS.PRODUCTS, resolvedProducts);
+            }
+        }
+
+        async function loadAllData() {
             try {
-                const settingsStr = localStorage.getItem(STORAGE_KEYS.SETTINGS);
-                const receiptsStr = localStorage.getItem(STORAGE_KEYS.RECEIPTS);
-                const logosStr = localStorage.getItem(STORAGE_KEYS.LOGOS);
-                
-                settings = settingsStr ? JSON.parse(settingsStr) : { ...defaultSettings };
-                receipts = receiptsStr ? JSON.parse(receiptsStr) : [];
-                logos = logosStr ? JSON.parse(logosStr) : {};
-                
-                // Merge with defaults for any missing properties
+                const [settingsData, receiptsData, logosData, productsData] = await Promise.all([
+                    storageGet(STORAGE_KEYS.SETTINGS),
+                    storageGet(STORAGE_KEYS.RECEIPTS),
+                    storageGet(STORAGE_KEYS.LOGOS),
+                    storageGet(STORAGE_KEYS.PRODUCTS)
+                ]);
+
+                settings = settingsData || { ...defaultSettings };
+                receipts = receiptsData || [];
+                logos = logosData || {};
+                products = productsData || [];
                 settings = { ...defaultSettings, ...settings };
+                localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+                localStorage.setItem(STORAGE_KEYS.RECEIPTS, JSON.stringify(receipts));
+                localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+                localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
                 
             } catch (error) {
                 console.error('Error loading data:', error);
-                // Reset to defaults on error
+                
                 settings = { ...defaultSettings };
                 receipts = [];
                 logos = {};
+                products = [];
             }
         }
 
         function saveSettings() {
             try {
                 localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+                storageSet(STORAGE_KEYS.SETTINGS, settings);
                 return true;
             } catch (error) {
                 console.error('Error saving settings:', error);
@@ -1992,6 +2203,7 @@
         function saveReceipts() {
             try {
                 localStorage.setItem(STORAGE_KEYS.RECEIPTS, JSON.stringify(receipts));
+                storageSet(STORAGE_KEYS.RECEIPTS, receipts);
                 return true;
             } catch (error) {
                 console.error('Error saving receipts:', error);
@@ -2004,6 +2216,7 @@
             try {
                 logos[key] = dataUrl;
                 localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+                storageSet(STORAGE_KEYS.RECEIPTS, receipts);
                 return true;
             } catch (error) {
                 console.error('Error saving logo:', error);
@@ -2016,9 +2229,22 @@
             try {
                 delete logos[key];
                 localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+                storageSet(STORAGE_KEYS.LOGOS, logos);
                 return true;
             } catch (error) {
                 console.error('Error removing logo:', error);
+                return false;
+            }
+        }
+
+        function saveProducts() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+                storageSet(STORAGE_KEYS.PRODUCTS, products);
+                return true;
+            } catch (error) {
+                console.error('Error saving products:', error);
+                showSnackbar('Erreur de sauvegarde des produits');
                 return false;
             }
         }
@@ -2039,6 +2265,9 @@
         }
 
         function createDynamicManifest() {
+            const icon192 = (window.ASSETS && ASSETS.icon192) ? ASSETS.icon192 : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%23795548' rx='48'/%3E%3Ctext x='96' y='140' font-size='120' text-anchor='middle' fill='white'%3E☕%3C/text%3E%3C/svg%3E";
+            const icon512 = (window.ASSETS && ASSETS.icon512) ? ASSETS.icon512 : icon192;
+            const icon96 = (window.ASSETS && ASSETS.icon96) ? ASSETS.icon96 : icon192;
             const manifest = {
                 "name": "Cafexpres Gestion Reçus",
                 "short_name": "Cafexpres",
@@ -2047,11 +2276,23 @@
                 "display": "standalone",
                 "background_color": "#FAFAFA",
                 "theme_color": "#795548",
-                "icons": [{
-                    "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%23795548' rx='48'/%3E%3Ctext x='96' y='140' font-size='120' text-anchor='middle' fill='white'%3E☕%3C/text%3E%3C/svg%3E",
-                    "sizes": "192x192",
-                    "type": "image/svg+xml"
-                }]
+                "icons": [
+                    {
+                        "src": icon96,
+                        "sizes": "96x96",
+                        "type": "image/svg+xml"
+                    },
+                    {
+                        "src": icon192,
+                        "sizes": "192x192",
+                        "type": "image/svg+xml"
+                    },
+                    {
+                        "src": icon512,
+                        "sizes": "512x512",
+                        "type": "image/svg+xml"
+                    }
+                ]
             };
 
             const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
@@ -2191,6 +2432,15 @@
                 `;
             }
         }
+        function applyAssetIcons() {
+            if (!window.ASSETS || !ASSETS.icons) return;
+            document.querySelectorAll('[data-icon]').forEach((element) => {
+                const iconKey = element.dataset.icon;
+                const icon = ASSETS.icons[iconKey];
+                if (!icon) return;
+                element.innerHTML = `<img src="${icon}" alt="">`;
+            });
+        }
 
         // ============================
         // EVENT LISTENERS
@@ -2209,12 +2459,15 @@
             document.getElementById('saveImage').addEventListener('click', saveAsImage);
             document.getElementById('savePDF').addEventListener('click', saveAsPDF);
             document.getElementById('printTicket').addEventListener('click', printTicket);
+            document.getElementById('printTicket').addEventListener('click', printTicket);
             document.getElementById('shareWhatsApp').addEventListener('click', shareWhatsApp);
             document.getElementById('newReceipt').addEventListener('click', newReceipt);
 
             // Products management
             document.getElementById('productsContainer').addEventListener('input', calculateProductTotal);
             document.getElementById('productsContainer').addEventListener('click', handleProductActions);
+            document.getElementById('productsContainer').addEventListener('change', handleProductSelection);
+            document.getElementById('productsTableBody').addEventListener('click', handleProductTableActions);
 
             // Form interactions
             document.getElementById('canal').addEventListener('change', toggleAutreCanal);
@@ -2240,10 +2493,20 @@
             document.getElementById('exportContactsCSV').addEventListener('click', exportContactsCSV);
             document.getElementById('searchContacts').addEventListener('input', searchContacts);
 
+            // Data backup
+            document.getElementById('exportDataJson').addEventListener('click', exportDataJson);
+            document.getElementById('importDataJson').addEventListener('change', importDataJson);
+
             // Tabs
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', switchTab);
             });
+
+            // Products modal
+            document.getElementById('scanProductBarcode').addEventListener('click', () => openScannerModal('productBarcodeInput'));
+            document.getElementById('cancelProductModal').addEventListener('click', closeProductModal);
+            document.getElementById('saveProductModal').addEventListener('click', saveProductFromModal);
+            document.getElementById('closeScannerModal').addEventListener('click', closeScannerModal);
 
             // Modals
             setupModalListeners();
@@ -2533,6 +2796,34 @@
             }
         }
 
+         function refreshProductsUI() {
+            const countEl = document.getElementById('productsCount');
+            if (countEl) {
+                countEl.textContent = `${products.length} produit${products.length > 1 ? 's' : ''}`;
+            }
+
+            const datalist = document.getElementById('productNameList');
+            if (datalist) {
+                datalist.innerHTML = products
+                    .map(p => `<option value="${p.name}"></option>`)
+                    .join('');
+            }
+        }
+
+        function handleProductSelection(event) {
+            if (!event.target.classList.contains('product-name')) return;
+            const name = event.target.value.trim();
+            const match = products.find(p => p.name.toLowerCase() === name.toLowerCase());
+            if (match) {
+                const row = event.target.closest('.product-row');
+                if (row) {
+                    row.querySelector('.product-price').value = match.price;
+                    row.querySelector('.product-quantity').value = row.querySelector('.product-quantity').value || 1;
+                    calculateProductTotal({ target: row.querySelector('.product-price') });
+                }
+            }
+        }
+
         function addProduct() {
             const tbody = document.getElementById('productsContainer');
             const newRow = tbody.querySelector('.product-row').cloneNode(true);
@@ -2555,6 +2846,234 @@
                     showSnackbar('Au moins un produit requis');
                 }
             }
+        }
+
+        function loadProducts() {
+            const tbody = document.getElementById('productsTableBody');
+            if (!tbody) return;
+            refreshProductsUI();
+
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 24px;">Aucun produit pour le moment</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>
+                        <strong>${product.name}</strong>
+                        ${product.description ? `<br><small class="text-secondary">${product.description}</small>` : ''}
+                    </td>
+                    <td>${Number(product.price).toLocaleString()} FCFA</td>
+                    <td>${product.barcode || '-'}</td>
+                    <td>
+                        <div style="display: flex; gap: 6px;">
+                            <button class="btn btn-text btn-sm" data-action="edit" data-id="${product.id}">✏️</button>
+                            <button class="btn btn-text btn-sm" data-action="delete" data-id="${product.id}">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showAddProductModal() {
+            currentProductId = null;
+            document.getElementById('productModalTitle').textContent = 'Nouveau Produit';
+            document.getElementById('productNameInput').value = '';
+            document.getElementById('productPriceInput').value = '';
+            document.getElementById('productBarcodeInput').value = '';
+            document.getElementById('productDescriptionInput').value = '';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            currentProductId = productId;
+            document.getElementById('productModalTitle').textContent = 'Modifier Produit';
+            document.getElementById('productNameInput').value = product.name;
+            document.getElementById('productPriceInput').value = product.price;
+            document.getElementById('productBarcodeInput').value = product.barcode || '';
+            document.getElementById('productDescriptionInput').value = product.description || '';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        function saveProductFromModal() {
+            const name = document.getElementById('productNameInput').value.trim();
+            const price = parseFloat(document.getElementById('productPriceInput').value);
+            const barcode = document.getElementById('productBarcodeInput').value.trim();
+            const description = document.getElementById('productDescriptionInput').value.trim();
+
+            if (!name || isNaN(price)) {
+                showSnackbar('Nom et prix requis');
+                return;
+            }
+
+            const now = new Date().toISOString();
+
+            if (currentProductId) {
+                const index = products.findIndex(p => p.id === currentProductId);
+                if (index !== -1) {
+                    products[index] = {
+                        ...products[index],
+                        name,
+                        price,
+                        barcode,
+                        description,
+                        updatedAt: now
+                    };
+                }
+            } else {
+                products.push({
+                    id: `prod_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+                    name,
+                    price,
+                    barcode,
+                    description,
+                    createdAt: now,
+                    updatedAt: now
+                });
+            }
+
+            saveProducts();
+            refreshProductsUI();
+            loadProducts();
+            closeProductModal();
+            showSnackbar('Produit enregistré');
+        }
+
+        function handleProductTableActions(event) {
+            const button = event.target.closest('button[data-action]');
+            if (!button) return;
+            const action = button.getAttribute('data-action');
+            const id = button.getAttribute('data-id');
+            if (action === 'edit') {
+                openProductModal(id);
+            } else if (action === 'delete') {
+                deleteProduct(id);
+            }
+        }
+
+        function deleteProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            if (!confirm(`Supprimer le produit "${product.name}" ?`)) return;
+
+            products = products.filter(p => p.id !== productId);
+            saveProducts();
+            refreshProductsUI();
+            loadProducts();
+            showSnackbar('Produit supprimé');
+        }
+
+        function openScannerModal(targetInputId) {
+            const targetInput = document.getElementById(targetInputId);
+            if (!targetInput) return;
+            scannerTargetInput = targetInput;
+            document.getElementById('scannerModal').style.display = 'flex';
+
+            const viewport = document.getElementById('scannerViewport');
+            viewport.innerHTML = '';
+
+            if ('BarcodeDetector' in window) {
+                startBarcodeDetector(viewport);
+                return;
+            }
+
+            if (typeof Quagga !== 'undefined') {
+                Quagga.init({
+                    inputStream: {
+                        type: 'LiveStream',
+                        target: viewport,
+                        constraints: {
+                            facingMode: 'environment'
+                        }
+                    },
+                    decoder: {
+                        readers: ['ean_reader', 'ean_8_reader', 'code_128_reader', 'upc_reader', 'upc_e_reader', 'code_39_reader']
+                    },
+                    locate: true
+                }, (err) => {
+                    if (err) {
+                        console.error(err);
+                        showSnackbar('Erreur scanner');
+                        return;
+                    }
+                    Quagga.start();
+                });
+
+                Quagga.offDetected();
+                Quagga.onDetected((result) => {
+                    const code = result.codeResult.code;
+                    if (scannerTargetInput) {
+                        scannerTargetInput.value = code;
+                        showSnackbar('Code-barres capturé');
+                    }
+                    closeScannerModal();
+                });
+                return;
+            }
+
+            showSnackbar('Scanner indisponible');
+        }
+
+        async function startBarcodeDetector(viewport) {
+            try {
+                scannerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                const video = document.createElement('video');
+                video.autoplay = true;
+                video.playsInline = true;
+                video.srcObject = scannerStream;
+                video.style.width = '100%';
+                video.style.height = '100%';
+                viewport.appendChild(video);
+
+                scannerDetector = new BarcodeDetector({ formats: ['ean_13', 'ean_8', 'code_128', 'code_39', 'upc_a', 'upc_e'] });
+
+                const scanFrame = async () => {
+                    if (!scannerStream) return;
+                    try {
+                        const barcodes = await scannerDetector.detect(video);
+                        if (barcodes.length > 0) {
+                            const code = barcodes[0].rawValue;
+                            if (scannerTargetInput) {
+                                scannerTargetInput.value = code;
+                                showSnackbar('Code-barres capturé');
+                            }
+                            closeScannerModal();
+                            return;
+                        }
+                    } catch (error) {
+                        console.warn('Barcode detection error', error);
+                    }
+                    scannerAnimationId = requestAnimationFrame(scanFrame);
+                };
+
+                scannerAnimationId = requestAnimationFrame(scanFrame);
+            } catch (error) {
+                console.error(error);
+                showSnackbar('Accès caméra refusé');
+            }
+        }
+
+        function closeScannerModal() {
+            document.getElementById('scannerModal').style.display = 'none';
+            if (scannerAnimationId) {
+                cancelAnimationFrame(scannerAnimationId);
+                scannerAnimationId = null;
+            }
+            if (scannerStream) {
+                scannerStream.getTracks().forEach(track => track.stop());
+                scannerStream = null;
+            }
+            if (typeof Quagga !== 'undefined') {
+                Quagga.stop();
+            }
+            scannerTargetInput = null;
         }
 
         // ============================
@@ -2671,6 +3190,11 @@
             setTimeout(() => window.print(), 500);
         }
 
+        function printTicket() {
+            showSnackbar('Ouverture impression...');
+            setTimeout(() => window.print(), 500);
+        }
+
         function shareWhatsApp() {
             document.getElementById('whatsappModal').style.display = 'flex';
         }
@@ -2742,13 +3266,14 @@
             const tbody = document.getElementById('productsContainer');
             tbody.innerHTML = `
                 <tr class="product-row">
-                    <td><input type="text" class="product-name" required></td>
+                    <td><input type="text" class="product-name" list="productNameList" required></td>
                     <td><input type="number" class="product-quantity" min="1" value="1" required></td>
                     <td><input type="number" class="product-price" min="0" required></td>
                     <td><input type="number" class="product-total" readonly></td>
-                    <td><button class="btn btn-text btn-icon remove-product"><span class="material-icons">delete</span></button></td>
+                    <td><button class="btn btn-text btn-icon remove-product"><span class="icon-text" data-icon="delete" aria-hidden="true"></span></button></td>
                 </tr>
             `;
+             applyAssetIcons();
 
             // Reset delivery
             document.getElementById('livraisonCheck').checked = false;
@@ -3160,6 +3685,2112 @@
             
             showSnackbar('Export CSV généré');
         }
+       <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#795548">
+    <meta name="description" content="Cafexpres - Système de Gestion des Reçus">
+    <link rel="manifest" href="#" id="manifestPlaceholder">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='75' font-size='75'%3E☕%3C/text%3E%3C/svg%3E">
+    <title>Cafexpres - Gestion des Reçus</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="libs.js"></script>
+    <script src="assets.js"></script>
+    
+    <style>
+        :root {
+            --primary: #795548;
+            --primary-light: #A1887F;
+            --primary-dark: #5D4037;
+            --accent: #D7CCC8;
+            --accent-light: #EFEBE9;
+            --blue: #1E88E5;
+            --blue-dark: #1565C0;
+            --text-primary: rgba(0, 0, 0, 0.87);
+            --text-secondary: rgba(0, 0, 0, 0.6);
+            --divider: rgba(0, 0, 0, 0.12);
+            --background: #FAFAFA;
+            --surface: #FFFFFF;
+            --error: #D32F2F;
+            --success: #388E3C;
+            --warning: #F57C00;
+            --shadow-1: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-2: 0 4px 8px rgba(0,0,0,0.12);
+            --shadow-3: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .icon-text {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .icon-text[data-icon] {
+            font-size: 0;
+        }
+
+        .icon-text img {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+
+        .app-bar {
+            background: var(--surface);
+            box-shadow: var(--shadow-2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .app-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-logo {
+            height: 40px;
+@@ -1105,71 +1119,139 @@
+            max-width: 300px;
+            z-index: 999;
+            display: none;
+        }
+
+        .install-prompt.show {
+            display: block;
+        }
+
+        .online-status {
+            position: fixed;
+            top: 60px;
+            right: 16px;
+            background: var(--success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .online-status.offline {
+            background: var(--warning);
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--surface);
+            border-radius: 8px;
+            box-shadow: var(--shadow-1);
+            padding: 16px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            max-width: 100%;
+            height: 260px;
+            border-radius: 8px;
+            background: var(--surface);
+            box-shadow: var(--shadow-1);
+            margin-bottom: 16px;
+        }
+
+        @media print {
+            @page {
+                size: 80mm auto;
+                margin: 5mm;
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            #receiptPreview,
+            #receiptPreview * {
+                visibility: visible;
+            }
+
+            #receiptPreview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 80mm;
+                font-size: 12px;
+            }
+
+            .app-bar,
+            .btn,
+            .tabs,
+            .filter-chips,
+            #settingsPage,
+            #historyPage {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Online Status Indicator -->
+    <div id="onlineStatus" class="online-status">En ligne</div>
+
+    <div class="app-bar">
+        <div class="app-bar-content">
+            <div class="app-brand">
+                <img src="" alt="" class="app-logo hidden" id="headerLogo">
+                <div id="headerLogoPlaceholder">
+                    <div class="app-title">☕ Cafexpres</div>
+                    <div class="app-subtitle">Gestion des Reçus</div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button class="icon-button" id="historyBtn" title="Historique">
+                    <span class="material-icons">history</span>
+                    <span class="icon-text" data-icon="receipt" aria-hidden="true"></span>
+                </button>
+                <button class="icon-button" id="settingsBtn" title="Paramètres">
+                    <span class="material-icons">settings</span>
+                    <span class="icon-text" data-icon="settings" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainPage" class="container">
+        <div class="card">
+            <div class="card-title">Informations Client</div>
+            <div class="card-content">
+                <div class="form-row">
+                    <div class="input-field">
+                        <label>Prénom *</label>
+                        <input type="text" id="prenom" required>
+                    </div>
+                    <div class="input-field">
+                        <label>Nom *</label>
+                        <input type="text" id="nom" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-field">
+                        <label>Téléphone</label>
+                        <input type="tel" id="clientPhone" placeholder="ex: 77 123 45 67">
+                    </div>
+                    <div class="input-field">
+@@ -1186,107 +1268,108 @@
+                    </div>
+                    <div class="input-field hidden" id="autreCanal">
+                        <label>Préciser le Canal *</label>
+                        <input type="text" id="canalAutre">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Produits</div>
+            <div class="card-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom du Produit</th>
+                                <th style="width: 100px;">Qté</th>
+                                <th style="width: 150px;">Prix Unitaire (FCFA)</th>
+                                <th style="width: 150px;">Total (FCFA)</th>
+                                <th style="width: 50px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsContainer">
+                            <tr class="product-row">
+                                <td><input type="text" class="product-name" required></td>
+                                <td><input type="text" class="product-name" list="productNameList" required></td>
+                                <td><input type="number" class="product-quantity" min="1" value="1" required></td>
+                                <td><input type="number" class="product-price" min="0" required></td>
+                                <td><input type="number" class="product-total" readonly></td>
+                                <td>
+                                    <button class="btn btn-text btn-icon remove-product" title="Supprimer">
+                                        <span class="material-icons">delete</span>
+                                        <span class="icon-text" data-icon="delete" aria-hidden="true"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <datalist id="productNameList"></datalist>
+                </div>
+                <button class="btn btn-text mt-16" id="addProduct">
+                    <span class="material-icons">add</span>
+                    <span class="icon-text" data-icon="add" aria-hidden="true"></span>
+                    Ajouter un Produit
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Paiement & Livraison</div>
+            <div class="card-content">
+                <div class="checkbox-field">
+                    <input type="checkbox" id="paidCheck">
+                    <label for="paidCheck">Commande payée</label>
+                </div>
+                
+                <div class="checkbox-field checkbox-nested hidden" id="partialPaymentSection">
+                    <input type="checkbox" id="partialPaymentCheck">
+                    <label for="partialPaymentCheck">Paiement partiel</label>
+                </div>
+                <div class="input-field hidden" id="amountPaidGroup" style="margin-left: 30px; margin-top: 8px;">
+                    <label>Montant déjà payé (FCFA)</label>
+                    <input type="number" id="amountPaid" min="0" placeholder="Entrer le montant payé">
+                </div>
+                
+                <div class="checkbox-field" style="margin-top: 24px;">
+                    <input type="checkbox" id="livraisonCheck">
+                    <label for="livraisonCheck">Le client paie la livraison</label>
+                </div>
+                <div class="hidden" id="livraisonOptions">
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="horsDakar">
+                        <label for="horsDakar">Hors Dakar (Montant personnalisé)</label>
+                    </div>
+                    <div class="input-field hidden" id="livraisonMontantGroup">
+                        <label>Montant Livraison (FCFA)</label>
+                        <input type="number" id="livraisonMontant" min="0" placeholder="Entrer le montant">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="generateReceipt">
+                <span class="material-icons">receipt</span>
+                <span class="icon-text" data-icon="receipt" aria-hidden="true"></span>
+                Générer le Reçu
+            </button>
+        </div>
+
+        <div id="receiptPreview" class="receipt-preview">
+            <div class="receipt-header">
+                <div class="receipt-header-left">
+                    <div id="receiptLogoContainer"></div>
+                    <div class="receipt-company-info" id="receiptCompanyInfoText">
+                        <h1 id="receiptCompanyName">CAFEXPRES</h1>
+                        <p id="receiptCompanyTagline">Instant Coffee Experience</p>
+                    </div>
+                </div>
+                <div class="receipt-header-right">
+                    <div class="receipt-doc-title">Reçu</div>
+                    <div id="receiptStatusBadge" class="receipt-status-badge hidden">PAYÉ</div>
+                </div>
+            </div>
+
+            <div class="receipt-info-section">
+                <div class="receipt-info-grid">
+                    <div class="receipt-info-block">
+                        <h4>Détails du Reçu</h4>
+                        <div class="receipt-info-item">
+                            <span class="receipt-info-label">Reçu n° :</span>
+@@ -1328,618 +1411,905 @@
+
+                <div class="receipt-summary">
+                    <div class="receipt-summary-box">
+                        <div class="receipt-summary-row hidden" id="livraisonLine">
+                            <span>Livraison</span>
+                            <span id="receiptLivraison"></span>
+                        </div>
+                        <div class="receipt-summary-row total">
+                            <span>TOTAL</span>
+                            <span id="receiptTotal"></span>
+                        </div>
+                        <div class="receipt-summary-row paid-amount hidden" id="paidAmountLine">
+                            <span>Déjà payé</span>
+                            <span id="receiptPaidAmount"></span>
+                        </div>
+                        <div class="receipt-summary-row remaining hidden" id="remainingLine">
+                            <span>RESTE À PAYER</span>
+                            <span id="receiptRemaining"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="receipt-payment">
+                    <div class="receipt-payment-title">Méthode de Paiement</div>
+                    <a href="#" target="_blank" class="btn btn-blue btn-sm" id="wavePaymentLink">
+                        <span class="material-icons" style="font-size: 16px;">payment</span>
+                        <span class="icon-text" aria-hidden="true">💳</span>
+                        Payer avec Wave
+                    </a>
+                    <div class="wave-qr-container" id="waveQrContainer"></div>
+                </div>
+            </div>
+
+            <div class="receipt-footer">
+                <div id="receiptFooterLogoContainer"></div>
+                <div class="receipt-footer-info">
+                    <div class="receipt-footer-brand" id="receiptFooterName">CAFEXPRES</div>
+                    <div class="receipt-footer-tagline" id="receiptFooterTagline">Instant Coffee Experience</div>
+                    <div class="receipt-footer-contact">
+                        <div id="receiptAddress">Ouakam Comico</div>
+                        <div id="receiptPhone">Tél : 76 235 55 37</div>
+                        <div style="margin-top: 8px; font-size: 11px; color: var(--text-secondary);">Merci pour votre commande !</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group hidden" id="receiptActions">
+            <button class="btn btn-secondary" id="saveImage">
+                <span class="material-icons">image</span>
+                <span class="icon-text" data-icon="export" aria-hidden="true"></span>
+                Image Story
+            </button>
+            <button class="btn btn-secondary" id="savePDF">
+                <span class="material-icons">picture_as_pdf</span>
+                <span class="icon-text" data-icon="reports" aria-hidden="true"></span>
+                PDF A4
+            </button>
+            <button class="btn btn-outline" id="printTicket">
+                <span class="icon-text" data-icon="print" aria-hidden="true"></span>
+                Ticket
+            </button>
+            <button class="btn btn-primary" id="shareWhatsApp">
+                <span class="material-icons">share</span>
+                <span class="icon-text" data-icon="share" aria-hidden="true"></span>
+                Partager WhatsApp
+            </button>
+            <button class="btn btn-text" id="newReceipt">
+                <span class="material-icons">refresh</span>
+                <span class="icon-text" aria-hidden="true">🔄</span>
+                Nouveau Reçu
+            </button>
+        </div>
+    </div>
+
+    <div id="historyPage" class="container hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+            <div>
+                <h1 style="font-size: 24px; font-weight: 500; margin-bottom: 4px;">Historique</h1>
+                <p class="text-secondary">Gérer les reçus et contacts</p>
+            </div>
+            <button class="btn btn-text" id="backToMain">
+                <span class="material-icons">arrow_back</span>
+                <span class="icon-text" aria-hidden="true">←</span>
+                Retour
+            </button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="receipts">Reçus</button>
+            <button class="tab" data-tab="contacts">Contacts</button>
+            <button class="tab" data-tab="dashboard">Dashboard</button>
+            <button class="tab" data-tab="products">Produits</button>
+            <button class="tab" data-tab="reports">Rapports</button>
+        </div>
+
+        <div id="receiptsTab">
+            <div class="card">
+                <div class="card-content">
+                    <div class="input-field">
+                        <input type="text" id="searchHistory" placeholder="Rechercher des reçus...">
+                    </div>
+                    <div class="filter-chips" style="margin-top: 16px;">
+                        <div class="chip active" data-filter="all">Tous</div>
+                        <div class="chip" data-filter="paid">Payés</div>
+                        <div class="chip" data-filter="unpaid">Impayés</div>
+                        <div class="chip" data-filter="partial">Partiels</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Reçu n°</th>
+                                <th>Date</th>
+                                <th>Client</th>
+                                <th>Canal</th>
+                                <th>Statut</th>
+                                <th style="text-align: right;">Total (FCFA)</th>
+                                <th style="width: 220px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="contactsTab" class="hidden">
+            <div class="card">
+                <div class="card-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div>
+                            <div style="font-size: 18px; font-weight: 500;">Liste des Contacts</div>
+                            <div class="text-secondary" style="font-size: 13px;" id="contactsCount">0 contacts</div>
+                        </div>
+                        <button class="btn btn-primary" id="exportContactsCSV">
+                            <span class="material-icons">download</span>
+                            Export CSV
+                        </button>
+                    <button class="btn btn-primary" id="exportContactsCSV">
+                            <span class="icon-text" data-icon="export" aria-hidden="true"></span>
+                        Export CSV
+                    </button>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" id="searchContacts" placeholder="Rechercher un contact...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Canal</th>
+                                <th>Dernière commande</th>
+                                <th style="text-align: right;">Total dépensé</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contactsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboardTab" class="hidden">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total Ventes</div>
+                    <div class="kpi-value" id="kpiTotalSales">0 FCFA</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Nombre Reçus</div>
+                    <div class="kpi-value" id="kpiReceiptCount">0</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Panier Moyen</div>
+                    <div class="kpi-value" id="kpiAverageBasket">0 FCFA</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Taux Paiement</div>
+                    <div class="kpi-value" id="kpiPaymentRate">0%</div>
+                </div>
+            </div>
+            <canvas id="chartSalesByDay" class="chart-canvas"></canvas>
+            <canvas id="chartTopProducts" class="chart-canvas"></canvas>
+        </div>
+
+        <div id="productsTab" class="hidden">
+            <div class="card">
+                <div class="card-content" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 18px; font-weight: 500;">Gestion des Produits</div>
+                        <div class="text-secondary" style="font-size: 13px;" id="productsCount">0 produits</div>
+                    </div>
+                    <button class="btn btn-primary" onclick="showAddProductModal()">
+                        <span class="icon-text" data-icon="add" aria-hidden="true"></span>
+                        Nouveau Produit
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prix</th>
+                                <th>Code-barres</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="reportsTab" class="hidden">
+            <div class="card">
+                <div class="card-content" style="display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                    <button class="btn btn-secondary" onclick="generateReport('daily')">📊 Rapport Journalier</button>
+                    <button class="btn btn-secondary" onclick="generateReport('weekly')">📊 Rapport Hebdomadaire</button>
+                    <button class="btn btn-secondary" onclick="generateReport('monthly')">📊 Rapport Mensuel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="settingsPage" class="container hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+            <div>
+                <h1 style="font-size: 24px; font-weight: 500; margin-bottom: 4px;">Paramètres</h1>
+                <p class="text-secondary">Configurer votre application</p>
+            </div>
+            <button class="btn btn-text" id="backFromSettings">
+                <span class="material-icons">arrow_back</span>
+                <span class="icon-text" aria-hidden="true">←</span>
+                Retour
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Informations de l'Entreprise</div>
+            <div class="card-content">
+                <div class="form-row">
+                    <div class="input-field">
+                        <label>Nom de l'Entreprise</label>
+                        <input type="text" id="settingsCompanyName" value="CAFEXPRES">
+                    </div>
+                    <div class="input-field">
+                        <label>Slogan</label>
+                        <input type="text" id="settingsTagline" value="Instant Coffee Experience">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-field">
+                        <label>Adresse</label>
+                        <input type="text" id="settingsAddress" value="Ouakam Comico">
+                    </div>
+                    <div class="input-field">
+                        <label>Téléphone</label>
+                        <input type="text" id="settingsPhone" value="76 235 55 37">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Paramètres de Paiement</div>
+            <div class="card-content">
+                <div class="input-field">
+                    <label>Lien Wave</label>
+                    <input type="url" id="settingsWaveLink" value="https://pay.wave.com/m/M_bgKLhi3PCiYG/c/sn/">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Logos de Marque</div>
+            <div class="card-content">
+                <div class="settings-section">
+                    <div class="settings-label">Logo En-tête (Barre d'App)</div>
+                    <div class="settings-description">Logo affiché dans l'en-tête. Recommandé : 200x50px</div>
+                    <div class="logo-upload-section">
+                        <div class="logo-preview" id="logoHeaderPreview">
+                            <div class="logo-preview-empty">
+                                <span class="material-icons" style="font-size: 32px;">add_photo_alternate</span>
+                                <span class="icon-text" aria-hidden="true">🖼️</span>
+                                <span style="font-size: 12px;">Aucun logo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="logoHeaderInput" accept="image/*" style="display: none;">
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-secondary" onclick="document.getElementById('logoHeaderInput').click()">
+                                <span class="material-icons">upload</span>
+                                <span class="icon-text" aria-hidden="true">⬆️</span>
+                                Télécharger
+                            </button>
+                            <button class="btn btn-text" id="removeLogoHeader">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section" style="margin-top: 24px;">
+                    <div class="settings-label">Logo Reçu (En-tête)</div>
+                    <div class="settings-description">Logo en haut du reçu. Recommandé : 140x70px</div>
+                    <div class="logo-upload-section">
+                        <div class="logo-preview" id="logoReceiptPreview">
+                            <div class="logo-preview-empty">
+                                <span class="material-icons" style="font-size: 32px;">add_photo_alternate</span>
+                                <span class="icon-text" aria-hidden="true">🖼️</span>
+                                <span style="font-size: 12px;">Aucun logo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="logoReceiptInput" accept="image/*" style="display: none;">
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-secondary" onclick="document.getElementById('logoReceiptInput').click()">
+                                <span class="material-icons">upload</span>
+                                <span class="icon-text" aria-hidden="true">⬆️</span>
+                                Télécharger
+                            </button>
+                            <button class="btn btn-text" id="removeLogoReceipt">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section" style="margin-top: 24px;">
+                    <div class="settings-label">Logo Pied de Page</div>
+                    <div class="settings-description">Logo en bas du reçu. Recommandé : 90x55px</div>
+                    <div class="logo-upload-section">
+                        <div class="logo-preview" id="logoFooterPreview">
+                            <div class="logo-preview-empty">
+                                <span class="material-icons" style="font-size: 32px;">add_photo_alternate</span>
+                                <span class="icon-text" aria-hidden="true">🖼️</span>
+                                <span style="font-size: 12px;">Aucun logo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="logoFooterInput" accept="image/*" style="display: none;">
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-secondary" onclick="document.getElementById('logoFooterInput').click()">
+                                <span class="material-icons">upload</span>
+                                <span class="icon-text" aria-hidden="true">⬆️</span>
+                                Télécharger
+                            </button>
+                            <button class="btn btn-text" id="removeLogoFooter">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section" style="margin-top: 24px;">
+                    <div class="settings-label">Logo Wave (PDF)</div>
+                    <div class="settings-description">Logo Wave affiché dans le QR code PDF. Recommandé : 100x100px</div>
+                    <div class="logo-upload-section">
+                        <div class="logo-preview logo-preview-small" id="logoWavePreview">
+                            <div class="logo-preview-empty">
+                                <span class="material-icons" style="font-size: 32px;">add_photo_alternate</span>
+                                <span class="icon-text" aria-hidden="true">🖼️</span>
+                                <span style="font-size: 12px;">Aucun logo</span>
+                            </div>
+                        </div>
+                        <input type="file" id="logoWaveInput" accept="image/*" style="display: none;">
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-secondary" onclick="document.getElementById('logoWaveInput').click()">
+                                <span class="material-icons">upload</span>
+                                <span class="icon-text" aria-hidden="true">⬆️</span>
+                                Télécharger
+                            </button>
+                            <button class="btn btn-text" id="removeLogoWave">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Sauvegarde & Import</div>
+            <div class="card-content">
+                <p class="text-secondary" style="margin-bottom: 16px;">
+                    Exportez vos données ou importez une sauvegarde JSON.
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                    <button class="btn btn-secondary" id="exportDataJson">
+                        <span class="icon-text" data-icon="export" aria-hidden="true"></span>
+                        Export JSON
+                    </button>
+                    <label class="btn btn-secondary" for="importDataJson">
+                        <span class="icon-text" data-icon="import" aria-hidden="true"></span>
+                        Import JSON
+                    </label>
+                    <input type="file" id="importDataJson" accept="application/json" style="display: none;">
+                </div>
+                <div class="text-secondary" style="margin-top: 12px; font-size: 12px;">
+                    L'import fusionne les reçus et produits par identifiant.
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="saveSettings">
+                <span class="material-icons">save</span>
+                <span class="icon-text" data-icon="check" aria-hidden="true"></span>
+                Enregistrer
+            </button>
+            <button class="btn btn-text" id="resetSettings">
+                <span class="material-icons">restart_alt</span>
+                <span class="icon-text" aria-hidden="true">♻️</span>
+                Réinitialiser
+            </button>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="productModalTitle">Nouveau Produit</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-field">
+                    <label>Nom du Produit *</label>
+                    <input type="text" id="productNameInput" placeholder="Nom du produit">
+                </div>
+                <div class="form-row">
+                    <div class="input-field">
+                        <label>Prix (FCFA) *</label>
+                        <input type="number" id="productPriceInput" min="0" placeholder="Prix">
+                    </div>
+                    <div class="input-field">
+                        <label>Code-barres</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="productBarcodeInput" placeholder="Scanner ou saisir">
+                            <button class="btn btn-secondary btn-sm" id="scanProductBarcode">
+                                <span class="icon-text" data-icon="scan" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <label>Description</label>
+                    <input type="text" id="productDescriptionInput" placeholder="Optionnel">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-text" id="cancelProductModal">Annuler</button>
+                <button class="btn btn-primary" id="saveProductModal">
+                    <span class="icon-text" data-icon="check" aria-hidden="true"></span>
+                    Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="scannerModal" class="modal">
+        <div class="modal-content" style="max-width: 640px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Scanner un Code-barres</h3>
+            </div>
+            <div class="modal-body">
+                <div id="scannerViewport" style="width: 100%; aspect-ratio: 4 / 3; background: #000;"></div>
+                <p class="text-secondary" style="margin-top: 12px;">
+                    Alignez le code-barres au centre de l'image.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-text" id="closeScannerModal">Fermer</button>
+            </div>
+        </div>
+    </div>
+    <div id="registerPaymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Enregistrer le Paiement Complet</h3>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px;">Marquer ce reçu comme totalement payé ?</p>
+                <div class="input-field">
+                    <label>Date de Paiement</label>
+                    <input type="datetime-local" id="paymentDate">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-text" id="cancelPayment">Annuler</button>
+                <button class="btn btn-success" id="confirmPayment">
+                    <span class="material-icons">check_circle</span>
+                    <span class="icon-text" data-icon="check" aria-hidden="true"></span>
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="partialPaymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Enregistrer un Paiement Partiel</h3>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px;">
+                    <strong>Total:</strong> <span id="partialTotal"></span> FCFA<br>
+                    <strong>Déjà payé:</strong> <span id="partialAlreadyPaid"></span> FCFA<br>
+                    <strong>Reste:</strong> <span id="partialRemaining"></span> FCFA
+                </p>
+                <div class="input-field">
+                    <label>Montant de ce paiement (FCFA)</label>
+                    <input type="number" id="partialPaymentAmount" min="0" placeholder="Entrer le montant">
+                </div>
+                <div class="input-field">
+                    <label>Date de Paiement</label>
+                    <input type="datetime-local" id="partialPaymentDate">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-text" id="cancelPartialPayment">Annuler</button>
+                <button class="btn btn-success" id="confirmPartialPayment">
+                    <span class="material-icons">check_circle</span>
+                    <span class="icon-text" data-icon="check" aria-hidden="true"></span>
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="whatsappModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Partager sur WhatsApp</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-field">
+                    <label>Numéro de Téléphone (avec indicatif)</label>
+                    <input type="tel" id="whatsappNumber" placeholder="ex : 221771234567">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-text" id="cancelWhatsApp">Annuler</button>
+                <button class="btn btn-primary" id="sendWhatsApp">
+                    <span class="material-icons">send</span>
+                    <span class="icon-text" data-icon="share" aria-hidden="true"></span>
+                    Envoyer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Accès Sécurisé</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-field">
+                    <label>Mot de Passe</label>
+                    <input type="password" id="passwordInput" placeholder="Entrer le mot de passe">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-text" id="cancelPassword">Annuler</button>
+                <button class="btn btn-primary" id="submitPassword">Soumettre</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="installPrompt" class="install-prompt">
+        <div style="font-weight: 500; margin-bottom: 8px;">Installer Cafexpres</div>
+        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">
+            Installez l'application pour un accès rapide
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button class="btn btn-text" id="dismissInstall">Ignorer</button>
+            <button class="btn btn-primary" id="installApp">Installer</button>
+        </div>
+    </div>
+
+    <div id="snackbar" class="snackbar"></div>
+
+    <script>
+        // ============================
+        // PWA & LOCAL STORAGE SETUP
+        // ============================
+        
+        const STORAGE_KEYS = {
+            SETTINGS: 'cafexpres_settings_v2',
+            RECEIPTS: 'cafexpres_receipts_v2',
+            LOGOS: 'cafexpres_logos_v2'
+            LOGOS: 'cafexpres_logos_v2',
+            PRODUCTS: 'cafexpres_products_v2'
+        };
+
+        const DB_NAME = 'cafexpres_db_v2';
+        const DB_VERSION = 1;
+
+        // Default settings
+        const defaultSettings = {
+            companyName: 'CAFEXPRES',
+            tagline: 'Instant Coffee Experience',
+            address: 'Ouakam Comico',
+            phone: '76 235 55 37',
+            waveLink: 'https://pay.wave.com/m/M_bgKLhi3PCiYG/c/sn/',
+            logoHeader: null,
+            logoReceipt: null,
+            logoFooter: null,
+            logoWave: null,
+            deliveryDefault: 2000,
+            currency: 'FCFA'
+        };
+
+        let settings = {};
+        let receipts = [];
+        let logos = {};
+        let products = [];
+        let dbPromise = null;
+        let currentProductId = null;
+        let scannerTargetInput = null;
+        let scannerStream = null;
+        let scannerAnimationId = null;
+        let scannerDetector = null;
+        let currentReceipt = null;
+        let currentReceiptForPayment = null;
+        const PASSWORD = '2411';
+        let deferredPrompt;
+        let isOnline = navigator.onLine;
+
+        // ============================
+        // INITIALIZATION
+        // ============================
+        
+        function initializeApp() {
+        async function initializeApp() {
+            console.log('Initializing Cafexpres PWA...');
+            
+            // Initialize storage
+            initializeStorage();
+            await initializeStorage();
+            
+            // Migrate legacy storage
+            await migrateLegacyStorage();
+
+            // Load data
+            loadAllData();
+            await loadAllData();
+            
+            // Apply offline icons
+            applyAssetIcons();
+
+            // Setup PWA
+            setupPWA();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Update UI
+            updateHeaderLogo();
+            loadSettingsUI();
+            refreshProductsUI();
+            loadProducts();
+            
+            // Setup online/offline detection
+            setupOnlineDetection();
+            
+            console.log('Cafexpres PWA initialized successfully');
+            showSnackbar('Application prête' + (isOnline ? '' : ' (Hors ligne)'));
+        }
+
+        function initializeStorage() {
+            // Initialize settings
+            const savedSettings = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+            if (!savedSettings) {
+                settings = { ...defaultSettings };
+                localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+        function openDatabase() {
+            if (!('indexedDB' in window)) {
+                return Promise.resolve(null);
+            }
+
+            // Initialize receipts
+            const savedReceipts = localStorage.getItem(STORAGE_KEYS.RECEIPTS);
+            if (!savedReceipts) {
+                receipts = [];
+                localStorage.setItem(STORAGE_KEYS.RECEIPTS, JSON.stringify(receipts));
+            if (dbPromise) return dbPromise;
+
+            dbPromise = new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains('kv')) {
+                        db.createObjectStore('kv', { keyPath: 'key' });
+                    }
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+
+            return dbPromise;
+        }
+
+        async function storageGet(key) {
+            const db = await openDatabase();
+            if (!db) {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : null;
+            }
+
+            // Initialize logos
+            const savedLogos = localStorage.getItem(STORAGE_KEYS.LOGOS);
+            if (!savedLogos) {
+                logos = {};
+                localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+            return new Promise((resolve) => {
+                const tx = db.transaction('kv', 'readonly');
+                const store = tx.objectStore('kv');
+                const request = store.get(key);
+                request.onsuccess = () => resolve(request.result ? request.result.value : null);
+                request.onerror = () => resolve(null);
+            });
+        }
+
+        async function storageSet(key, value) {
+            const db = await openDatabase();
+            if (!db) {
+                localStorage.setItem(key, JSON.stringify(value));
+                return;
+            }
+
+            return new Promise((resolve) => {
+                const tx = db.transaction('kv', 'readwrite');
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => resolve();
+                tx.objectStore('kv').put({ key, value });
+            });
+        }
+
+        function loadAllData() {
+        async function initializeStorage() {
+            try {
+                const settingsStr = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+                const receiptsStr = localStorage.getItem(STORAGE_KEYS.RECEIPTS);
+                const logosStr = localStorage.getItem(STORAGE_KEYS.LOGOS);
+                
+                settings = settingsStr ? JSON.parse(settingsStr) : { ...defaultSettings };
+                receipts = receiptsStr ? JSON.parse(receiptsStr) : [];
+                logos = logosStr ? JSON.parse(logosStr) : {};
+                
+                // Merge with defaults for any missing properties
+                await openDatabase();
+            } catch (error) {
+                console.warn('IndexedDB unavailable, fallback to localStorage', error);
+                dbPromise = null;
+            }
+        }
+
+        async function migrateLegacyStorage() {
+            const legacyKeys = {
+                SETTINGS: 'cafexpres_settings',
+                RECEIPTS: 'cafexpres_receipts',
+                LOGOS: 'cafexpres_logos',
+                PRODUCTS: 'cafexpres_products'
+            };
+
+            const [settingsData, receiptsData, logosData, productsData] = await Promise.all([
+                storageGet(STORAGE_KEYS.SETTINGS),
+                storageGet(STORAGE_KEYS.RECEIPTS),
+                storageGet(STORAGE_KEYS.LOGOS),
+                storageGet(STORAGE_KEYS.PRODUCTS)
+            ]);
+
+            const localSettings = JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS) || 'null');
+            const localReceipts = JSON.parse(localStorage.getItem(STORAGE_KEYS.RECEIPTS) || 'null');
+            const localLogos = JSON.parse(localStorage.getItem(STORAGE_KEYS.LOGOS) || 'null');
+            const localProducts = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS) || 'null');
+
+            const legacySettings = JSON.parse(localStorage.getItem(legacyKeys.SETTINGS) || 'null');
+            const legacyReceipts = JSON.parse(localStorage.getItem(legacyKeys.RECEIPTS) || 'null');
+            const legacyLogos = JSON.parse(localStorage.getItem(legacyKeys.LOGOS) || 'null');
+            const legacyProducts = JSON.parse(localStorage.getItem(legacyKeys.PRODUCTS) || 'null');
+
+            const resolvedSettings = settingsData ?? localSettings ?? legacySettings;
+            const resolvedReceipts = receiptsData ?? localReceipts ?? legacyReceipts;
+            const resolvedLogos = logosData ?? localLogos ?? legacyLogos;
+            const resolvedProducts = productsData ?? localProducts ?? legacyProducts;
+
+            if (resolvedSettings && !settingsData) {
+                await storageSet(STORAGE_KEYS.SETTINGS, resolvedSettings);
+            }
+            if (resolvedReceipts && !receiptsData) {
+                await storageSet(STORAGE_KEYS.RECEIPTS, resolvedReceipts);
+            }
+            if (resolvedLogos && !logosData) {
+                await storageSet(STORAGE_KEYS.LOGOS, resolvedLogos);
+            }
+            if (resolvedProducts && !productsData) {
+                await storageSet(STORAGE_KEYS.PRODUCTS, resolvedProducts);
+            }
+        }
+
+        async function loadAllData() {
+            try {
+                const [settingsData, receiptsData, logosData, productsData] = await Promise.all([
+                    storageGet(STORAGE_KEYS.SETTINGS),
+                    storageGet(STORAGE_KEYS.RECEIPTS),
+                    storageGet(STORAGE_KEYS.LOGOS),
+                    storageGet(STORAGE_KEYS.PRODUCTS)
+                ]);
+
+                settings = settingsData || { ...defaultSettings };
+                receipts = receiptsData || [];
+                logos = logosData || {};
+                products = productsData || [];
+
+                settings = { ...defaultSettings, ...settings };
+                
+
+                localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+                localStorage.setItem(STORAGE_KEYS.RECEIPTS, JSON.stringify(receipts));
+                localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+                localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+            } catch (error) {
+                console.error('Error loading data:', error);
+                // Reset to defaults on error
+                settings = { ...defaultSettings };
+                receipts = [];
+                logos = {};
+                products = [];
+            }
+        }
+
+        function saveSettings() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+                storageSet(STORAGE_KEYS.SETTINGS, settings);
+                return true;
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                showSnackbar('Erreur de sauvegarde');
+                return false;
+            }
+        }
+
+        function saveReceipts() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.RECEIPTS, JSON.stringify(receipts));
+                storageSet(STORAGE_KEYS.RECEIPTS, receipts);
+                return true;
+            } catch (error) {
+                console.error('Error saving receipts:', error);
+                showSnackbar('Erreur de sauvegarde des reçus');
+                return false;
+            }
+        }
+
+        function saveLogo(key, dataUrl) {
+            try {
+                logos[key] = dataUrl;
+                localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+                storageSet(STORAGE_KEYS.LOGOS, logos);
+                return true;
+            } catch (error) {
+                console.error('Error saving logo:', error);
+                showSnackbar('Erreur de sauvegarde du logo');
+                return false;
+            }
+        }
+
+        function removeLogo(key) {
+            try {
+                delete logos[key];
+                localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+                storageSet(STORAGE_KEYS.LOGOS, logos);
+                return true;
+            } catch (error) {
+                console.error('Error removing logo:', error);
+                return false;
+            }
+        }
+
+        function saveProducts() {
+            try {
+                localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
+                storageSet(STORAGE_KEYS.PRODUCTS, products);
+                return true;
+            } catch (error) {
+                console.error('Error saving products:', error);
+                showSnackbar('Erreur de sauvegarde des produits');
+                return false;
+            }
+        }
+
+        // ============================
+        // PWA SETUP
+        // ============================
+        
+        function setupPWA() {
+            // Create dynamic manifest
+            createDynamicManifest();
+            
+            // Setup install prompt
+            setupInstallPrompt();
+            
+            // Register service worker
+            registerServiceWorker();
+        }
+
+        function createDynamicManifest() {
+            const icon192 = (window.ASSETS && ASSETS.icon192) ? ASSETS.icon192 : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%23795548' rx='48'/%3E%3Ctext x='96' y='140' font-size='120' text-anchor='middle' fill='white'%3E☕%3C/text%3E%3C/svg%3E";
+            const icon512 = (window.ASSETS && ASSETS.icon512) ? ASSETS.icon512 : icon192;
+            const icon96 = (window.ASSETS && ASSETS.icon96) ? ASSETS.icon96 : icon192;
+            const manifest = {
+                "name": "Cafexpres Gestion Reçus",
+                "short_name": "Cafexpres",
+                "description": "Système de Gestion des Reçus Cafexpres",
+                "start_url": "./",
+                "display": "standalone",
+                "background_color": "#FAFAFA",
+                "theme_color": "#795548",
+                "icons": [{
+                    "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%23795548' rx='48'/%3E%3Ctext x='96' y='140' font-size='120' text-anchor='middle' fill='white'%3E☕%3C/text%3E%3C/svg%3E",
+                    "sizes": "192x192",
+                    "type": "image/svg+xml"
+                }]
+                "icons": [
+                    {
+                        "src": icon96,
+                        "sizes": "96x96",
+                        "type": "image/svg+xml"
+                    },
+                    {
+                        "src": icon192,
+                        "sizes": "192x192",
+                        "type": "image/svg+xml"
+                    },
+                    {
+                        "src": icon512,
+                        "sizes": "512x512",
+                        "type": "image/svg+xml"
+                    }
+                ]
+            };
+
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            
+            // Update manifest link
+            const manifestLink = document.getElementById('manifestPlaceholder');
+            if (manifestLink) {
+                manifestLink.setAttribute('href', manifestURL);
+            }
+        }
+
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js').catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+            }
+        }
+
+        function setupInstallPrompt() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+@@ -2029,109 +2399,132 @@
+
+        function loadSettingsUI() {
+            // Load settings into form
+            document.getElementById('settingsCompanyName').value = settings.companyName;
+            document.getElementById('settingsTagline').value = settings.tagline;
+            document.getElementById('settingsAddress').value = settings.address;
+            document.getElementById('settingsPhone').value = settings.phone;
+            document.getElementById('settingsWaveLink').value = settings.waveLink;
+
+            // Load logos
+            updateLogoPreview('logoHeaderPreview', settings.logoHeader);
+            updateLogoPreview('logoReceiptPreview', settings.logoReceipt);
+            updateLogoPreview('logoFooterPreview', settings.logoFooter);
+            updateLogoPreview('logoWavePreview', settings.logoWave);
+        }
+
+        function updateLogoPreview(elementId, logoData) {
+            const preview = document.getElementById(elementId);
+            if (!preview) return;
+            
+            if (logoData) {
+                preview.innerHTML = `<img src="${logoData}" alt="Logo">`;
+            } else {
+                preview.innerHTML = `
+                    <div class="logo-preview-empty">
+                        <span class="material-icons" style="font-size: 32px;">add_photo_alternate</span>
+                        <span class="icon-text" aria-hidden="true">🖼️</span>
+                        <span style="font-size: 12px;">Aucun logo</span>
+                    </div>
+                `;
+            }
+        }
+
+        function applyAssetIcons() {
+            if (!window.ASSETS || !ASSETS.icons) return;
+            document.querySelectorAll('[data-icon]').forEach((element) => {
+                const iconKey = element.dataset.icon;
+                const icon = ASSETS.icons[iconKey];
+                if (!icon) return;
+                element.innerHTML = `<img src="${icon}" alt="">`;
+            });
+        }
+
+        // ============================
+        // EVENT LISTENERS
+        // ============================
+        
+        function setupEventListeners() {
+            // Navigation
+            document.getElementById('settingsBtn').addEventListener('click', showSettingsPage);
+            document.getElementById('historyBtn').addEventListener('click', showHistoryPage);
+            document.getElementById('backFromSettings').addEventListener('click', showMainPage);
+            document.getElementById('backToMain').addEventListener('click', showMainPage);
+
+            // Main page
+            document.getElementById('generateReceipt').addEventListener('click', generateReceipt);
+            document.getElementById('addProduct').addEventListener('click', addProduct);
+            document.getElementById('saveImage').addEventListener('click', saveAsImage);
+            document.getElementById('savePDF').addEventListener('click', saveAsPDF);
+            document.getElementById('printTicket').addEventListener('click', printTicket);
+            document.getElementById('shareWhatsApp').addEventListener('click', shareWhatsApp);
+            document.getElementById('newReceipt').addEventListener('click', newReceipt);
+
+            // Products management
+            document.getElementById('productsContainer').addEventListener('input', calculateProductTotal);
+            document.getElementById('productsContainer').addEventListener('click', handleProductActions);
+            document.getElementById('productsContainer').addEventListener('change', handleProductSelection);
+            document.getElementById('productsTableBody').addEventListener('click', handleProductTableActions);
+
+            // Form interactions
+            document.getElementById('canal').addEventListener('change', toggleAutreCanal);
+            document.getElementById('paidCheck').addEventListener('change', togglePaymentOptions);
+            document.getElementById('partialPaymentCheck').addEventListener('change', togglePartialPayment);
+            document.getElementById('livraisonCheck').addEventListener('change', toggleLivraisonOptions);
+            document.getElementById('horsDakar').addEventListener('change', toggleHorsDakar);
+
+            // Settings
+            document.getElementById('saveSettings').addEventListener('click', saveSettingsHandler);
+            document.getElementById('resetSettings').addEventListener('click', resetSettingsHandler);
+
+            // Logo uploads
+            setupLogoUploadListeners();
+
+            // History
+            document.getElementById('searchHistory').addEventListener('input', searchHistory);
+            document.querySelectorAll('.chip').forEach(chip => {
+                chip.addEventListener('click', filterHistory);
+            });
+
+            // Contacts
+            document.getElementById('exportContactsCSV').addEventListener('click', exportContactsCSV);
+            document.getElementById('searchContacts').addEventListener('input', searchContacts);
+
+            // Data backup
+            document.getElementById('exportDataJson').addEventListener('click', exportDataJson);
+            document.getElementById('importDataJson').addEventListener('change', importDataJson);
+
+            // Tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', switchTab);
+            });
+
+            // Products modal
+            document.getElementById('scanProductBarcode').addEventListener('click', () => openScannerModal('productBarcodeInput'));
+            document.getElementById('cancelProductModal').addEventListener('click', closeProductModal);
+            document.getElementById('saveProductModal').addEventListener('click', saveProductFromModal);
+            document.getElementById('closeScannerModal').addEventListener('click', closeScannerModal);
+
+            // Modals
+            setupModalListeners();
+        }
+
+        function setupLogoUploadListeners() {
+            // Header logo
+            document.getElementById('logoHeaderInput').addEventListener('change', (e) => handleLogoUpload(e, 'logoHeader'));
+            document.getElementById('removeLogoHeader').addEventListener('click', () => removeLogoHandler('logoHeader'));
+
+            // Receipt logo
+            document.getElementById('logoReceiptInput').addEventListener('change', (e) => handleLogoUpload(e, 'logoReceipt'));
+            document.getElementById('removeLogoReceipt').addEventListener('click', () => removeLogoHandler('logoReceipt'));
+
+            // Footer logo
+            document.getElementById('logoFooterInput').addEventListener('change', (e) => handleLogoUpload(e, 'logoFooter'));
+            document.getElementById('removeLogoFooter').addEventListener('click', () => removeLogoHandler('logoFooter'));
+
+            // Wave logo
+            document.getElementById('logoWaveInput').addEventListener('change', (e) => handleLogoUpload(e, 'logoWave'));
+            document.getElementById('removeLogoWave').addEventListener('click', () => removeLogoHandler('logoWave'));
+        }
+
+        function handleLogoUpload(event, logoType) {
+            const file = event.target.files[0];
+            if (!file) return;
+@@ -2376,74 +2769,330 @@
+            
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(container, {
+                    text: settings.waveLink,
+                    width: 180,
+                    height: 180,
+                    colorDark: '#000000',
+                    colorLight: '#ffffff'
+                });
+            }
+        }
+
+        // ============================
+        // PRODUCT MANAGEMENT
+        // ============================
+        
+        function calculateProductTotal(event) {
+            if (event.target.classList.contains('product-quantity') || event.target.classList.contains('product-price')) {
+                const row = event.target.closest('.product-row');
+                const quantity = parseFloat(row.querySelector('.product-quantity').value) || 0;
+                const price = parseFloat(row.querySelector('.product-price').value) || 0;
+                row.querySelector('.product-total').value = (quantity * price).toFixed(0);
+            }
+        }
+
+        function refreshProductsUI() {
+            const countEl = document.getElementById('productsCount');
+            if (countEl) {
+                countEl.textContent = `${products.length} produit${products.length > 1 ? 's' : ''}`;
+            }
+
+            const datalist = document.getElementById('productNameList');
+            if (datalist) {
+                datalist.innerHTML = products
+                    .map(p => `<option value="${p.name}"></option>`)
+                    .join('');
+            }
+        }
+
+        function handleProductSelection(event) {
+            if (!event.target.classList.contains('product-name')) return;
+            const name = event.target.value.trim();
+            const match = products.find(p => p.name.toLowerCase() === name.toLowerCase());
+            if (match) {
+                const row = event.target.closest('.product-row');
+                if (row) {
+                    row.querySelector('.product-price').value = match.price;
+                    row.querySelector('.product-quantity').value = row.querySelector('.product-quantity').value || 1;
+                    calculateProductTotal({ target: row.querySelector('.product-price') });
+                }
+            }
+        }
+
+        function addProduct() {
+            const tbody = document.getElementById('productsContainer');
+            const newRow = tbody.querySelector('.product-row').cloneNode(true);
+            newRow.querySelectorAll('input').forEach(input => {
+                if (input.classList.contains('product-quantity')) {
+                    input.value = '1';
+                } else {
+                    input.value = '';
+                }
+            });
+            tbody.appendChild(newRow);
+        }
+
+        function handleProductActions(event) {
+            if (event.target.closest('.remove-product')) {
+                const rows = document.querySelectorAll('.product-row');
+                if (rows.length > 1) {
+                    event.target.closest('.product-row').remove();
+                } else {
+                    showSnackbar('Au moins un produit requis');
+                }
+            }
+        }
+
+        function loadProducts() {
+            const tbody = document.getElementById('productsTableBody');
+            if (!tbody) return;
+            refreshProductsUI();
+
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 24px;">Aucun produit pour le moment</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>
+                        <strong>${product.name}</strong>
+                        ${product.description ? `<br><small class="text-secondary">${product.description}</small>` : ''}
+                    </td>
+                    <td>${Number(product.price).toLocaleString()} FCFA</td>
+                    <td>${product.barcode || '-'}</td>
+                    <td>
+                        <div style="display: flex; gap: 6px;">
+                            <button class="btn btn-text btn-sm" data-action="edit" data-id="${product.id}">✏️</button>
+                            <button class="btn btn-text btn-sm" data-action="delete" data-id="${product.id}">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function showAddProductModal() {
+            currentProductId = null;
+            document.getElementById('productModalTitle').textContent = 'Nouveau Produit';
+            document.getElementById('productNameInput').value = '';
+            document.getElementById('productPriceInput').value = '';
+            document.getElementById('productBarcodeInput').value = '';
+            document.getElementById('productDescriptionInput').value = '';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            currentProductId = productId;
+            document.getElementById('productModalTitle').textContent = 'Modifier Produit';
+            document.getElementById('productNameInput').value = product.name;
+            document.getElementById('productPriceInput').value = product.price;
+            document.getElementById('productBarcodeInput').value = product.barcode || '';
+            document.getElementById('productDescriptionInput').value = product.description || '';
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        function saveProductFromModal() {
+            const name = document.getElementById('productNameInput').value.trim();
+            const price = parseFloat(document.getElementById('productPriceInput').value);
+            const barcode = document.getElementById('productBarcodeInput').value.trim();
+            const description = document.getElementById('productDescriptionInput').value.trim();
+
+            if (!name || isNaN(price)) {
+                showSnackbar('Nom et prix requis');
+                return;
+            }
+
+            const now = new Date().toISOString();
+
+            if (currentProductId) {
+                const index = products.findIndex(p => p.id === currentProductId);
+                if (index !== -1) {
+                    products[index] = {
+                        ...products[index],
+                        name,
+                        price,
+                        barcode,
+                        description,
+                        updatedAt: now
+                    };
+                }
+            } else {
+                products.push({
+                    id: `prod_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+                    name,
+                    price,
+                    barcode,
+                    description,
+                    createdAt: now,
+                    updatedAt: now
+                });
+            }
+
+            saveProducts();
+            refreshProductsUI();
+            loadProducts();
+            closeProductModal();
+            showSnackbar('Produit enregistré');
+        }
+
+        function handleProductTableActions(event) {
+            const button = event.target.closest('button[data-action]');
+            if (!button) return;
+            const action = button.getAttribute('data-action');
+            const id = button.getAttribute('data-id');
+            if (action === 'edit') {
+                openProductModal(id);
+            } else if (action === 'delete') {
+                deleteProduct(id);
+            }
+        }
+
+        function deleteProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            if (!confirm(`Supprimer le produit "${product.name}" ?`)) return;
+
+            products = products.filter(p => p.id !== productId);
+            saveProducts();
+            refreshProductsUI();
+            loadProducts();
+            showSnackbar('Produit supprimé');
+        }
+
+        function openScannerModal(targetInputId) {
+            const targetInput = document.getElementById(targetInputId);
+            if (!targetInput) return;
+            scannerTargetInput = targetInput;
+            document.getElementById('scannerModal').style.display = 'flex';
+
+            const viewport = document.getElementById('scannerViewport');
+            viewport.innerHTML = '';
+
+            if ('BarcodeDetector' in window) {
+                startBarcodeDetector(viewport);
+                return;
+            }
+
+            if (typeof Quagga !== 'undefined') {
+                Quagga.init({
+                    inputStream: {
+                        type: 'LiveStream',
+                        target: viewport,
+                        constraints: {
+                            facingMode: 'environment'
+                        }
+                    },
+                    decoder: {
+                        readers: ['ean_reader', 'ean_8_reader', 'code_128_reader', 'upc_reader', 'upc_e_reader', 'code_39_reader']
+                    },
+                    locate: true
+                }, (err) => {
+                    if (err) {
+                        console.error(err);
+                        showSnackbar('Erreur scanner');
+                        return;
+                    }
+                    Quagga.start();
+                });
+
+                Quagga.offDetected();
+                Quagga.onDetected((result) => {
+                    const code = result.codeResult.code;
+                    if (scannerTargetInput) {
+                        scannerTargetInput.value = code;
+                        showSnackbar('Code-barres capturé');
+                    }
+                    closeScannerModal();
+                });
+                return;
+            }
+
+            showSnackbar('Scanner indisponible');
+        }
+
+        async function startBarcodeDetector(viewport) {
+            try {
+                scannerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                const video = document.createElement('video');
+                video.autoplay = true;
+                video.playsInline = true;
+                video.srcObject = scannerStream;
+                video.style.width = '100%';
+                video.style.height = '100%';
+                viewport.appendChild(video);
+
+                scannerDetector = new BarcodeDetector({ formats: ['ean_13', 'ean_8', 'code_128', 'code_39', 'upc_a', 'upc_e'] });
+
+                const scanFrame = async () => {
+                    if (!scannerStream) return;
+                    try {
+                        const barcodes = await scannerDetector.detect(video);
+                        if (barcodes.length > 0) {
+                            const code = barcodes[0].rawValue;
+                            if (scannerTargetInput) {
+                                scannerTargetInput.value = code;
+                                showSnackbar('Code-barres capturé');
+                            }
+                            closeScannerModal();
+                            return;
+                        }
+                    } catch (error) {
+                        console.warn('Barcode detection error', error);
+                    }
+                    scannerAnimationId = requestAnimationFrame(scanFrame);
+                };
+
+                scannerAnimationId = requestAnimationFrame(scanFrame);
+            } catch (error) {
+                console.error(error);
+                showSnackbar('Accès caméra refusé');
+            }
+        }
+
+        function closeScannerModal() {
+            document.getElementById('scannerModal').style.display = 'none';
+            if (scannerAnimationId) {
+                cancelAnimationFrame(scannerAnimationId);
+                scannerAnimationId = null;
+            }
+            if (scannerStream) {
+                scannerStream.getTracks().forEach(track => track.stop());
+                scannerStream = null;
+            }
+            if (typeof Quagga !== 'undefined') {
+                Quagga.stop();
+            }
+            scannerTargetInput = null;
+        }
+
+        // ============================
+        // FORM TOGGLES
+        // ============================
+        
+        function toggleAutreCanal() {
+            document.getElementById('autreCanal').classList.toggle('hidden', this.value !== 'Autre');
+        }
+
+        function togglePaymentOptions() {
+            document.getElementById('partialPaymentSection').classList.toggle('hidden', !this.checked);
+            if (!this.checked) {
+                document.getElementById('partialPaymentCheck').checked = false;
+                document.getElementById('amountPaidGroup').classList.add('hidden');
+            }
+        }
+
+        function togglePartialPayment() {
+            document.getElementById('amountPaidGroup').classList.toggle('hidden', !this.checked);
+        }
+
+        function toggleLivraisonOptions() {
+            document.getElementById('livraisonOptions').classList.toggle('hidden', !this.checked);
+            if (!this.checked) {
+                document.getElementById('horsDakar').checked = false;
+                document.getElementById('livraisonMontantGroup').classList.add('hidden');
+@@ -2509,50 +3158,55 @@
+                });
+                
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jspdf.jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                const pageWidth = 210;
+                const marginLeft = 5;
+                const marginTop = 5;
+                const contentWidth = 200;
+                const imgHeight = (canvas.height * contentWidth) / canvas.width;
+                
+                pdf.addImage(imgData, 'PNG', marginLeft, marginTop, contentWidth, imgHeight);
+                pdf.save(`Reçu_cafexpres_${currentReceipt.number}.pdf`);
+                showSnackbar('PDF généré');
+            } catch (error) {
+                showSnackbar('Erreur lors de la génération du PDF');
+            } finally {
+                receiptEl.classList.remove('pdf-mode');
+            }
+        }
+
+        function printTicket() {
+            showSnackbar('Ouverture impression...');
+            setTimeout(() => window.print(), 500);
+        }
+
+        function shareWhatsApp() {
+            document.getElementById('whatsappModal').style.display = 'flex';
+        }
+
+        function sendWhatsApp() {
+            const number = document.getElementById('whatsappNumber').value.trim();
+            if (!number) {
+                showSnackbar('Veuillez entrer un numéro');
+                return;
+            }
+
+            let message = `*${settings.companyName.toUpperCase()} REÇU*\n\n`;
+            message += `Reçu n° : ${currentReceipt.number}\n`;
+            message += `Date : ${currentReceipt.date}\n`;
+            
+            if (currentReceipt.paid && !currentReceipt.partialPayment) {
+                message += `Statut : PAYÉ ✓\n`;
+            } else if (currentReceipt.partialPayment) {
+                message += `Statut : PAIEMENT PARTIEL\n`;
+            } else {
+                message += `Statut : IMPAYÉ\n`;
+            }
+            
+            message += `Client : ${currentReceipt.client.prenom} ${currentReceipt.client.nom}\n\n`;
+            message += `*PRODUITS:*\n`;
+@@ -2580,57 +3234,58 @@
+
+            window.open(`https://wa.me/${number}?text=${encodeURIComponent(message)}`, '_blank');
+            document.getElementById('whatsappModal').style.display = 'none';
+            document.getElementById('whatsappNumber').value = '';
+            showSnackbar('Ouverture WhatsApp...');
+        }
+
+        function newReceipt() {
+            // Reset form
+            document.getElementById('prenom').value = '';
+            document.getElementById('nom').value = '';
+            document.getElementById('clientPhone').value = '';
+            document.getElementById('canal').value = '';
+            document.getElementById('canalAutre').value = '';
+            document.getElementById('autreCanal').classList.add('hidden');
+            document.getElementById('paidCheck').checked = false;
+            document.getElementById('partialPaymentCheck').checked = false;
+            document.getElementById('partialPaymentSection').classList.add('hidden');
+            document.getElementById('amountPaidGroup').classList.add('hidden');
+            document.getElementById('amountPaid').value = '';
+            
+            // Reset products table
+            const tbody = document.getElementById('productsContainer');
+            tbody.innerHTML = `
+                <tr class="product-row">
+                    <td><input type="text" class="product-name" required></td>
+                    <td><input type="text" class="product-name" list="productNameList" required></td>
+                    <td><input type="number" class="product-quantity" min="1" value="1" required></td>
+                    <td><input type="number" class="product-price" min="0" required></td>
+                    <td><input type="number" class="product-total" readonly></td>
+                    <td><button class="btn btn-text btn-icon remove-product"><span class="material-icons">delete</span></button></td>
+                    <td><button class="btn btn-text btn-icon remove-product"><span class="icon-text" data-icon="delete" aria-hidden="true"></span></button></td>
+                </tr>
+            `;
+            applyAssetIcons();
+
+            // Reset delivery
+            document.getElementById('livraisonCheck').checked = false;
+            document.getElementById('horsDakar').checked = false;
+            document.getElementById('livraisonMontant').value = '';
+            document.getElementById('livraisonOptions').classList.add('hidden');
+            document.getElementById('livraisonMontantGroup').classList.add('hidden');
+
+            // Hide receipt preview
+            document.getElementById('receiptPreview').style.display = 'none';
+            document.getElementById('receiptActions').classList.add('hidden');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================
+        // SETTINGS
+        // ============================
+        
+        function saveSettingsHandler() {
+            settings.companyName = document.getElementById('settingsCompanyName').value;
+            settings.tagline = document.getElementById('settingsTagline').value;
+            settings.address = document.getElementById('settingsAddress').value;
+            settings.phone = document.getElementById('settingsPhone').value;
+@@ -2719,67 +3374,67 @@
+                    r.client.nom.toLowerCase().includes(term) ||
+                    (r.client.phone && r.client.phone.toLowerCase().includes(term)) ||
+                    r.canal.toLowerCase().includes(term)
+                );
+            }
+
+            // Render table
+            tbody.innerHTML = filtered.length === 0 
+                ? '<tr><td colspan="7" style="text-align: center; padding: 32px;">Aucun reçu trouvé</td></tr>'
+                : filtered.map(r => {
+                    let statusBadge = '';
+                    if (r.paid && !r.partialPayment) {
+                        statusBadge = '<span style="padding: 4px 8px; background: var(--success); color: white; border-radius: 3px; font-size: 11px; font-weight: 600;">PAYÉ</span>';
+                    } else if (r.partialPayment) {
+                        statusBadge = '<span style="padding: 4px 8px; background: #FF9800; color: white; border-radius: 3px; font-size: 11px; font-weight: 600;">PARTIEL</span>';
+                    } else {
+                        statusBadge = '<span style="padding: 4px 8px; background: var(--warning); color: white; border-radius: 3px; font-size: 11px; font-weight: 600;">IMPAYÉ</span>';
+                    }
+                    
+                    const clientDisplay = r.client.phone 
+                        ? `${r.client.prenom} ${r.client.nom}<br><small class="text-secondary">${r.client.phone}</small>`
+                        : `${r.client.prenom} ${r.client.nom}`;
+                    
+                    let actionButtons = `
+                        <button class="btn btn-text btn-icon btn-sm" onclick="viewReceiptFromHistory('${r.number}')" title="Voir">
+                            <span class="material-icons" style="font-size: 18px;">visibility</span>
+                            <span class="icon-text" aria-hidden="true">👁️</span>
+                        </button>
+                    `;
+                    
+                    if (!r.paid) {
+                        actionButtons += `
+                            <button class="btn btn-success btn-sm" onclick="registerPayment('${r.number}')" title="Paiement Complet" style="padding: 4px 8px;">
+                                <span class="material-icons" style="font-size: 16px;">payment</span>
+                                <span class="icon-text" aria-hidden="true">💳</span>
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="registerPartialPayment('${r.number}')" title="Paiement Partiel" style="padding: 4px 8px;">
+                                <span class="material-icons" style="font-size: 16px;">payments</span>
+                                <span class="icon-text" aria-hidden="true">💳</span>
+                            </button>
+                        `;
+                    } else if (r.partialPayment && r.remaining > 0) {
+                        actionButtons += `
+                            <button class="btn btn-success btn-sm" onclick="registerPartialPayment('${r.number}')" title="Ajouter Paiement" style="padding: 4px 8px;">
+                                <span class="material-icons" style="font-size: 16px;">payments</span>
+                                <span class="icon-text" aria-hidden="true">💳</span>
+                            </button>
+                        `;
+                    }
+                    
+                    return `
+                        <tr>
+                            <td>${r.number}</td>
+                            <td>${r.date}</td>
+                            <td>${clientDisplay}</td>
+                            <td>${r.canal}</td>
+                            <td>${statusBadge}</td>
+                            <td style="text-align: right; font-weight: 600;">${r.total.toLocaleString()}</td>
+                            <td>
+                                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                    ${actionButtons}
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+        }
+
+        function searchHistory(event) {
+            loadHistory(event.target.value);
+        }
+@@ -2999,61 +3654,381 @@
+                    }
+                }
+            });
+            
+            let contacts = Object.values(contactsMap);
+            contacts.sort((a, b) => new Date(b.lastOrderTimestamp) - new Date(a.lastOrderTimestamp));
+            
+            let csv = 'Prénom,Nom,Téléphone,Canal,Dernière Commande,Nombre de Commandes,Total Dépensé (FCFA)\n';
+            contacts.forEach(c => {
+                csv += `${c.prenom},${c.nom},${c.phone},${c.canal},${c.lastOrder},${c.ordersCount},${c.totalSpent}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `Contacts_Cafexpres_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showSnackbar('Export CSV généré');
+        }
+
+        // ============================
+        // DATA BACKUP & RESTORE
+        // ============================
+
+        function exportDataJson() {
+            const payload = {
+                version: 2,
+                exportedAt: new Date().toISOString(),
+                data: {
+                    settings,
+                    receipts,
+                    logos,
+                    products
+                }
+            };
+
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Cafexpres_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+            showSnackbar('Export JSON généré');
+        }
+
+        async function importDataJson(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            try {
+                const text = await file.text();
+                const parsed = JSON.parse(text);
+                const data = parsed.data || parsed;
+
+                if (!data || (!data.settings && !data.receipts && !data.products)) {
+                    showSnackbar('Format JSON invalide');
+                    return;
+                }
+
+                const incomingReceipts = Array.isArray(data.receipts) ? data.receipts : [];
+                const incomingProducts = Array.isArray(data.products) ? data.products : [];
+
+                const mergedReceipts = mergeByKey(receipts, incomingReceipts, 'number', 'timestamp');
+                const mergedProducts = mergeByKey(products, incomingProducts, 'id', 'updatedAt', 'name');
+
+                settings = { ...settings, ...(data.settings || {}) };
+                logos = { ...logos, ...(data.logos || {}) };
+                receipts = mergedReceipts;
+                products = mergedProducts;
+
+                saveSettings();
+                saveReceipts();
+                saveProducts();
+                localStorage.setItem(STORAGE_KEYS.LOGOS, JSON.stringify(logos));
+                storageSet(STORAGE_KEYS.LOGOS, logos);
+
+                loadSettingsUI();
+                updateHeaderLogo();
+                refreshProductsUI();
+                loadProducts();
+                loadHistory();
+                loadContacts();
+                showSnackbar('Import JSON terminé');
+            } catch (error) {
+                console.error('Import error', error);
+                showSnackbar('Erreur import JSON');
+            } finally {
+                event.target.value = '';
+            }
+        }
+
+        function mergeByKey(existing, incoming, key, timestampKey, fallbackKey) {
+            const map = new Map();
+            existing.forEach(item => {
+                if (item && item[key]) map.set(item[key], item);
+                else if (fallbackKey && item && item[fallbackKey]) map.set(item[fallbackKey], item);
+            });
+
+            incoming.forEach(item => {
+                if (!item) return;
+                const primaryKey = item[key] || (fallbackKey ? item[fallbackKey] : null);
+                if (!primaryKey) return;
+                const current = map.get(primaryKey);
+                if (!current) {
+                    map.set(primaryKey, item);
+                    return;
+                }
+                if (!timestampKey) {
+                    map.set(primaryKey, { ...current, ...item });
+                    return;
+                }
+                const currentTime = current[timestampKey] ? new Date(current[timestampKey]).getTime() : 0;
+                const incomingTime = item[timestampKey] ? new Date(item[timestampKey]).getTime() : 0;
+                map.set(primaryKey, incomingTime >= currentTime ? { ...current, ...item } : current);
+            });
+
+            return Array.from(map.values()).sort((a, b) => {
+                const aTime = a.timestamp || a.updatedAt || 0;
+                const bTime = b.timestamp || b.updatedAt || 0;
+                return new Date(bTime).getTime() - new Date(aTime).getTime();
+            });
+        }
+
         // ============================
         // DASHBOARD & PRODUCTS
         // ============================
@@ -3175,21 +5806,181 @@
             document.getElementById('kpiReceiptCount').textContent = receiptCount.toLocaleString();
             document.getElementById('kpiAverageBasket').textContent = `${averageBasket.toLocaleString()} FCFA`;
             document.getElementById('kpiPaymentRate').textContent = `${paymentRate}%`;
+
+            renderSalesByDayChart();
+            renderTopProductsChart();
         }
 
-        function loadProducts() {
-            const tbody = document.getElementById('productsTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 24px;">Aucun produit pour le moment</td></tr>';
+        function renderSalesByDayChart() {
+            const labels = [];
+            const values = [];
+            const now = new Date();
+            for (let i = 6; i >= 0; i--) {
+                const day = new Date(now);
+                day.setDate(now.getDate() - i);
+                const dayLabel = day.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric' });
+                labels.push(dayLabel);
+                const start = new Date(day.setHours(0, 0, 0, 0));
+                const end = new Date(day.setHours(23, 59, 59, 999));
+                const total = receipts
+                    .filter(r => r.timestamp && new Date(r.timestamp) >= start && new Date(r.timestamp) <= end)
+                    .reduce((sum, r) => sum + r.total, 0);
+                values.push(total);
+            }
+
+            renderBarChart('chartSalesByDay', 'Ventes (7 derniers jours)', labels, values, 'FCFA');
         }
 
-        function showAddProductModal() {
-            showSnackbar('Fonction d’ajout produit à implémenter');
+        function renderTopProductsChart() {
+            const totals = {};
+            receipts.forEach(receipt => {
+                (receipt.products || []).forEach(product => {
+                    if (!product.name) return;
+                    totals[product.name] = (totals[product.name] || 0) + (product.total || (product.price * product.quantity));
+                });
+            });
+
+            const topEntries = Object.entries(totals)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            const labels = topEntries.length ? topEntries.map(entry => entry[0]) : ['Aucun'];
+            const values = topEntries.length ? topEntries.map(entry => entry[1]) : [0];
+
+            renderBarChart('chartTopProducts', 'Top Produits', labels, values, 'FCFA');
+        }
+
+        function renderBarChart(canvasId, title, labels, values, unit) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const pixelRatio = window.devicePixelRatio || 1;
+            const width = canvas.clientWidth || 600;
+            const height = canvas.clientHeight || 260;
+            canvas.width = width * pixelRatio;
+            canvas.height = height * pixelRatio;
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(pixelRatio, pixelRatio);
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#333';
+            ctx.font = '600 14px system-ui, sans-serif';
+            ctx.fillText(title, 16, 24);
+
+            const chartTop = 40;
+            const chartBottom = height - 30;
+            const chartLeft = 40;
+            const chartRight = width - 16;
+            const chartHeight = chartBottom - chartTop;
+            const chartWidth = chartRight - chartLeft;
+
+            const maxValue = Math.max(...values, 1);
+            const barWidth = chartWidth / values.length - 12;
+
+            ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+            ctx.beginPath();
+            ctx.moveTo(chartLeft, chartBottom);
+            ctx.lineTo(chartRight, chartBottom);
+            ctx.stroke();
+
+            values.forEach((value, index) => {
+                const x = chartLeft + index * (barWidth + 12) + 6;
+                const barHeight = maxValue ? (value / maxValue) * chartHeight : 0;
+                const y = chartBottom - barHeight;
+
+                ctx.fillStyle = '#FF6F00';
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                ctx.fillStyle = '#555';
+                ctx.font = '10px system-ui, sans-serif';
+                ctx.save();
+                ctx.translate(x + barWidth / 2, chartBottom + 12);
+                ctx.rotate(-0.4);
+                ctx.textAlign = 'center';
+                ctx.fillText(labels[index], 0, 0);
+                ctx.restore();
+
+                ctx.fillStyle = '#333';
+                ctx.font = '10px system-ui, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${Math.round(value).toLocaleString()} ${unit}`, x + barWidth / 2, y - 6);
+            });
         }
 
         function generateReport(type) {
-            showSnackbar(`Génération rapport ${type}...`);
+            if (!window.jspdf) {
+                showSnackbar('PDF indisponible hors ligne');
+                return;
+            }
+
+            const now = new Date();
+            let startDate;
+            let endDate;
+            let title = '';
+
+            if (type === 'daily') {
+                startDate = new Date(now.setHours(0, 0, 0, 0));
+                endDate = new Date(now.setHours(23, 59, 59, 999));
+                title = 'Rapport Journalier';
+            } else if (type === 'weekly') {
+                endDate = new Date();
+                startDate = new Date();
+                startDate.setDate(endDate.getDate() - 6);
+                startDate.setHours(0, 0, 0, 0);
+                title = 'Rapport Hebdomadaire';
+            } else {
+                startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+                title = 'Rapport Mensuel';
+            }
+
+            const filtered = receipts.filter(r => r.timestamp && new Date(r.timestamp) >= startDate && new Date(r.timestamp) <= endDate);
+            const total = filtered.reduce((sum, r) => sum + r.total, 0);
+            const paid = filtered.filter(r => r.paid && !r.partialPayment).length;
+            const unpaid = filtered.filter(r => !r.paid).length;
+
+            const pdf = new jspdf.jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+            let y = 20;
+            pdf.setFontSize(16);
+            pdf.text(`${settings.companyName} - ${title}`, 14, y);
+            y += 8;
+            pdf.setFontSize(11);
+            pdf.text(`Période: ${startDate.toLocaleDateString('fr-FR')} → ${endDate.toLocaleDateString('fr-FR')}`, 14, y);
+            y += 8;
+            pdf.text(`Total ventes: ${total.toLocaleString()} FCFA`, 14, y);
+            y += 6;
+            pdf.text(`Reçus: ${filtered.length} | Payés: ${paid} | Impayés: ${unpaid}`, 14, y);
+            y += 10;
+
+            pdf.setFontSize(10);
+            pdf.text('N°', 14, y);
+            pdf.text('Date', 35, y);
+            pdf.text('Client', 75, y);
+            pdf.text('Total', 155, y);
+            y += 4;
+            pdf.line(14, y, 196, y);
+            y += 6;
+
+            filtered.forEach((receipt, index) => {
+                if (y > 275) {
+                    pdf.addPage();
+                    y = 20;
+                }
+                const clientName = `${receipt.client.prenom} ${receipt.client.nom}`.slice(0, 18);
+                pdf.text(`${index + 1}`, 14, y);
+                pdf.text(receipt.date, 35, y);
+                pdf.text(clientName, 75, y);
+                pdf.text(`${receipt.total.toLocaleString()} FCFA`, 155, y);
+                y += 6;
+            });
+
+            pdf.save(`${title.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`);
+            showSnackbar(`${title} généré`);
         }
+
 
         // ============================
         // TAB MANAGEMENT
